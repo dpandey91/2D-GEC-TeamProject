@@ -1,0 +1,145 @@
+<?xml version = "1.0"?>
+<GameData>
+<!-- screenTitle is also used to identify you and your animation. 
+     So make sure to include your name as part of the screenTitle -->
+<screenTitle>Dipika's GOT Animation</screenTitle>
+<maxStringSize>50</maxStringSize>
+
+<frameCap>60</frameCap>
+<framesAreCapped>true</framesAreCapped>
+
+<frameMax>1000</frameMax>
+<username>dpandey</username>
+
+<view>
+  <width>854</width>
+  <height>480</height>
+</view>
+
+<world>
+  <width>1500</width>
+  <height>760</height>
+</world>
+
+<frameRateAvg>200</frameRateAvg>
+
+<back>
+  <file>images/background.png</file>
+  <red>193</red>
+  <green>205</green>
+  <blue>205</blue>
+  <factor>1</factor>
+  <transparency>false</transparency>
+</back>
+
+<map>
+  <file>images/mapsmall2.png</file>
+  <red>193</red>
+  <green>205</green>
+  <blue>205</blue>
+  <factor>1</factor>
+  <transparency>false</transparency>
+</map>
+
+<castleBig>
+  <file>images/castleBig2.png</file>
+  <red>193</red>
+  <green>205</green>
+  <blue>205</blue>
+  <factor>1</factor>
+  <transparency>false</transparency>
+</castleBig>
+
+<castleSmall>
+  <file>images/castleSmall2.png</file>
+  <red>193</red>
+  <green>205</green>
+  <blue>205</blue>
+  <factor>1</factor>
+  <transparency>false</transparency>
+</castleSmall>
+
+<cloud>
+  <file>images/cloud.png</file>
+  <red>193</red>
+  <green>205</green>
+  <blue>205</blue>
+  <factor>2</factor>
+  <transparency>false</transparency>
+</cloud>
+
+<font name="font">
+  <file>font/dyslexic-bold.otf</file>
+  <size>16</size>
+  <red>255</red>
+  <green>255</green>
+  <blue>255</blue>
+  <unused>0</unused>
+</font>
+
+<fireball>
+  <file>images/fireballsheet.png</file>
+  <startLoc x="20" y="70"/>
+  <xframes>1</xframes>
+  <yframes>17</yframes>
+  <frameInterval>80</frameInterval>
+  <speedX>63</speedX>
+  <speedY>o</speedY>
+  <comeback>true</comeback>
+  <transparency>false</transparency>
+</fireball>
+
+<drogon>
+  <filePositive>images/dragonsheet2-right.png</filePositive>
+  <fileNegative>images/dragonsheet2-left.png</fileNegative>
+  <startLoc x="54" y="210"/>
+  <xframes>1</xframes>
+  <yframes>6</yframes>
+  <frameInterval>80</frameInterval>
+  <speedX>60</speedX>
+  <speedY>8</speedY>
+  <comeback>true</comeback>
+  <transparency>false</transparency>
+</drogon>
+
+<viserion>
+  <filePositive>images/dragonsheet3-right.png</filePositive>
+  <fileNegative>images/dragonsheet3-left.png</fileNegative>
+  <startLoc x="67" y="80"/>
+  <xframes>1</xframes>
+  <yframes>20</yframes>
+  <frameInterval>80</frameInterval>
+  <speedX>60</speedX>
+  <speedY>0</speedY>
+  <comeback>true</comeback>
+  <transparency>true</transparency>
+</viserion>
+
+<blackpearl>
+  <file>images/ship2.png</file>
+  <startLoc x="978" y="63"/>
+  <frameInterval>20</frameInterval>
+  <speedX>10</speedX>
+  <speedY>0</speedY>
+  <comeback>false</comeback>
+  <transparency>true</transparency>
+</blackpearl>
+
+<interceptor>
+  <file>images/ship3.png</file>
+  <startLoc x="458" y="88"/>
+  <frameInterval>20</frameInterval>
+  <speedX>10</speedX>
+  <speedY>0</speedY>
+  <comeback>false</comeback>
+  <transparency>true</transparency>
+</interceptor>
+
+<hudBar>
+  <width>350</width>
+  <height>200</height>
+  <startLoc x="30" y="30"/>
+  <color red="255" green="255" blue="0"/>
+</hudBar>
+
+</GameData>
