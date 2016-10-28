@@ -1,20 +1,24 @@
 # 2D-GEC
-2D Game Engine Construction
-Student Name: Dipika Pandey
-Project Partner:Sapna Gandhi
-Game Name: Escape the Graveyard
+Student Name: Sapna Gandhi
+Student User Name- sapnapg
+Project Partner:Dipika Pandey
+Project Partner User Name- dpandey
+Game Name:Escape the Graveyard
 
-Dipika’s Effort:
 
-Player:
-1)Implemented asdw feature of player object. The player object also moves diagonal on pressing two keys i.e. up/down and right/left.
-2)Player’s speed can also be increased and decreased using z and x key respectively.
-3)Sprites have variable named comeback which if set to true then the sprites will comeback else it will stop after reaching the end. The value of this variable is specified using xml.
+Sapna’s individual Efforts:
+
+Implementation of HUD:
+1)Implemented the HUD for project which is displayed first when the game starts and it goes after some seconds which is specified in xml.
+2)The HUD toggles on pressing key F1 and displays information for player.
+3)The specification of HUD is flexible and its parameters can be set using xml.
+4)The HUD class is singleton as we’ll be showing only one HUD throughout the game.
 
 Common Efforts by both Partners:
 1)Together, we have  implemented the painter’s algorithm. The frames created for scaled sprites are shallow copy. The number of actual frames created is defined by actual attribute of noOfObjects tag signifying different scales based on min and max scale and then its shallow copy is created for each instances. This leads in efficient implementation i.e. with increase in number of instances to be created will not impact the efficiency of code.
 
-2)We have also implemented the health meter for player whose specifications are fetched using xml. The health of the player will keep decreasing if the player moves and will reach to zero gradually and thus the plalyer will stop moving. You can press key K to boost player’s health so that it can move again. The health class is singleton as there is only one health bar.
+2)We have also implemented the health meter for player whose specifications are fetched using xml. The health of the player will keep decreasing if the player moves and will reach to zero gradually and thus the player will stop moving. You can press key K to boost player’s health so that it can move again. The health class is singleton as there is only one health bar.
+
 
 Game Description:
 
@@ -34,7 +38,6 @@ References:
 4)http://www.clipartkid.com/full-moon-transparent-cliparts/…. for Moon image
 5)http://instantsprite.com/… for making spritesheet
 6)http://ezgif.com/ …for frame extraction from Gif
-
 
 
 
