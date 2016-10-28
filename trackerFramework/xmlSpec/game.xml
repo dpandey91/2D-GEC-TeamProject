@@ -99,7 +99,7 @@
 <healthBar>
   <startLoc x="20" y="100"/>
   <length>200</length>
-  <increment>2</increment>
+  <increment>1</increment>
   <thick>14</thick>
   <moveCount>50</moveCount>
 </healthBar>
@@ -109,7 +109,7 @@
   <startLoc x="0" y="0"/>
   <endLoc x="3000" y="480"/>
   <cushion>50</cushion>
-  <noOfObjects actual="3" instances="6" />
+  <noOfObjects actual="3" instances="6"/>
   <scale min="0.2" max="1.2"/>
   <width>32</width>
   <height>32</height>
