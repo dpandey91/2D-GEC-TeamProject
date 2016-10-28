@@ -55,7 +55,6 @@ Manager::Manager() :
   frameMax( Gamedata::getInstance().getXmlInt("frameMax") ),
   hudBar( HudClass::getInstance() ),
   healthBar( Health::getInstance() ),
-  playerHealth(100),
   hudTime( Gamedata::getInstance().getXmlInt("hudBar/time") ),
   showHud(false),
   isWalk(false),
@@ -162,7 +161,7 @@ void Manager::draw() const {
   }
   
   if(clock.getSeconds() < hudTime || showHud){
-    hudBar.drawHud(screen, io, clock.getSeconds(), clock.getAvgFrameRate(), playerHealth);
+    hudBar.drawHud(screen, io, clock.getSeconds(), clock.getAvgFrameRate());
   }  
 
   healthBar.draw();  

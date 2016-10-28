@@ -23,7 +23,7 @@ HudClass::HudClass():
 HudClass::~HudClass()
 {}
 
-void HudClass::drawHud(SDL_Surface* const screen, const IOManager& io, int seconds, int fps, int health) const{
+void HudClass::drawHud(SDL_Surface* const screen, const IOManager& io, int seconds, int fps) const{
 
     const Uint32 color = SDL_MapRGB(screen->format, rgbVal.red, rgbVal.blue, rgbVal.green);
     Draw_AALine(screen, xPos, yPos+hudHeight/2, xPos+hudWidth, yPos+hudHeight/2, hudHeight, 0, 0, 0, 0xff/2);
