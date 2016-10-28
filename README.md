@@ -11,7 +11,7 @@ Player:
 1)Implemented asdw feature of player object. The player object also moves diagonal on pressing on two keys i.e. up/down and right/left.
 2)Player’s speed can also be increased and decreased using z and x key respectively.
 3)Sprites have variable comeback which is set true and the sprites will comeback else it will stop after reaching end. The value of this variable is specified using xml.
-4)For moving player, keypress is handled using both case i.e. small case and uppercase.
+
 
 Common Efforts by both Partners:
 1)Together, we have  implemented the painter’s algorithm. The frames created  for scaled sprites are shallow copy. The number of actual frames created is defined by actual attribute of noOfObjects tag signifying different scales based on min and max scale and then its shallow copy is created for each instances. This leads in efficient implementation i.e. with increase in number of instances to be created will not impact the efficiency of code.
