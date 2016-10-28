@@ -71,7 +71,6 @@ Manager::Manager() :
   
   makePumpkins();
   sprites.push_back(player);
-  sprites.push_back(new Sprite("moon");
   viewport.setObjectToTrack(sprites[currentSprite]);
 }
 
