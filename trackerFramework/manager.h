@@ -42,7 +42,6 @@ private:
   
   HudClass& hudBar;
   Health& healthBar;
-  int playerHealth;
   unsigned int hudTime;
   bool showHud;
   bool isWalk;
