@@ -2,7 +2,7 @@
 <GameData>
 <!-- screenTitle is also used to identify you and your animation. 
      So make sure to include your name as part of the screenTitle -->
-<screenTitle>Dipika's GOT Animation</screenTitle>
+<screenTitle>Escape the Graveyard</screenTitle>
 <maxStringSize>50</maxStringSize>
 
 <frameCap>60</frameCap>
