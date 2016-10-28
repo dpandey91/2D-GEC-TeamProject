@@ -166,7 +166,6 @@ void Manager::draw() const {
   }  
 
   healthBar.draw();  
-  io.printMessageAt("Press T to switch sprites", 10, 65);
   io.printMessageAt(title, 10, 450);
   viewport.draw();
  
