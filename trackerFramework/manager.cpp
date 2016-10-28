@@ -161,7 +161,6 @@ void Manager::draw() const {
     sprites[i]->draw();
   }
   
-  // TODO: Replace 3 with xml value
   if(clock.getSeconds() < hudTime || showHud){
     hudBar.drawHud(screen, io, clock.getSeconds(), clock.getAvgFrameRate(), playerHealth);
   }  
@@ -213,7 +212,7 @@ void Manager::update() {
   
   if(isWalk){
     if(moveTick > 10){
-      healthBar.update(ticks);
+      healthBar.update();
       moveTick = 0;    
     }
     else{

@@ -2,7 +2,7 @@
 #define PLAYER__H
 #include <string>
 #include <vector>
-#include "twoWayMultiSprite.h"
+#include "twoWayMultisprite.h"
 
 class Player : public TwoWayMultiSprite {
 public:
