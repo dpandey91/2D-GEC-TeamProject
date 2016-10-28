@@ -71,6 +71,9 @@
 <moon>
   <file>images/moon.png</file>
   <startLoc x="50" y="70"/>
+  <speedX>0</speedX>
+  <speedY>0</speedY>
+  <comeback>true</comeback>
   <transparency>false</transparency>
 </moon>
 
@@ -81,7 +84,7 @@
   <xframes>1</xframes>
   <yframes>9</yframes>
   <yBound>100</yBound>
-  <frameInterval>20</frameInterval>
+  <frameInterval>50</frameInterval>
   <speedX>300</speedX>
   <speedY>100</speedY>
   <comeback>true</comeback>
