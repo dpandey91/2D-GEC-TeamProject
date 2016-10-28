@@ -10,7 +10,7 @@ public:
   static Health& getInstance();
   
   void draw() const;
-  void update(Uint32);
+  void update();
   void reset() { currentLength = totalLength; }
   int getHealth() { return currentLength; }
   

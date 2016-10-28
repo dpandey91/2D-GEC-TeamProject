@@ -62,7 +62,8 @@ void Health::draw() const {
                       start[0]+currentLength, start[1], 
                       thick, color);
 }
-void Health::update(Uint32 ticks) {
+
+void Health::update() {
   
   if ( currentLength > 0) {
     deltaTime = 0;
