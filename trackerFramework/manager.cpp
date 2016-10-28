@@ -166,7 +166,7 @@ void Manager::draw() const {
   }  
 
   healthBar.draw();  
-  io.printMessageAt(title, 10, 450);
+  io.printMessageAt(title, 10, 440);
   viewport.draw();
  
   SDL_Flip(screen);

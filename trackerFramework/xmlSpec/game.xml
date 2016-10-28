@@ -92,7 +92,7 @@
   <height>200</height>
   <startLoc x="490" y="20"/>
   <color red="255" green="255" blue="0"/>
-  <time>5</time>
+  <time>10</time>
 </hudBar>
 
 <healthBar>
