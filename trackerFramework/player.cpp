@@ -10,17 +10,19 @@ Player::Player( const std::string& name) :
   keyPresseda(false),
   keyPresseds(false),
   keyPressedd(false),
-  keyPressedw(false)
+  keyPressedw(false),
+  yBound(Gamedata::getInstance().getXmlInt("boy/yBound"))
 {}
 
 Player::Player(const Player& s) :
   TwoWayMultiSprite(s),
-  currState(IDLE),
-  keyPressed(false),
-  keyPresseda(false),
-  keyPresseds(false),
-  keyPressedd(false),
-  keyPressedw(false)
+  currState(s.currState),
+  keyPressed(s.keyPressed),
+  keyPresseda(s.keyPresseda),
+  keyPresseds(s.keyPresseds),
+  keyPressedd(s.keyPressedd),
+  keyPressedw(s.keyPressedw),
+  yBound(s.yBound)
 {}
 
 void Player::resetPosition(){
@@ -87,7 +89,7 @@ void Player::move(const float& incr){
     }
     
     if(keyPressedw){
-        if( Y() >0){
+        if( Y() > yBound){
             Y(Y() + velocityY()*incr);     
             velocityY( -abs( velocityY() ) ); 
         }

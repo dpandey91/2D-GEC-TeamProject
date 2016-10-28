@@ -32,6 +32,7 @@ private:
   
   void move(const float& incr);
   int currState;
+  int yBound;
   bool keyPressed;
   bool keyPresseda;
   bool keyPresseds;
