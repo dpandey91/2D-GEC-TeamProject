@@ -19,7 +19,7 @@ public:
   static HudClass& getInstance();
   ~HudClass();
   
-  void drawHud(SDL_Surface* const, const IOManager&, int seconds, int fps, int health) const;
+  void drawHud(SDL_Surface* const, const IOManager&, int seconds, int fps) const;
 
 private:
   const int hudWidth;
