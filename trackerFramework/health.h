@@ -23,7 +23,7 @@ private:
   int increments;
   float interval;
   int deltaTime;
-  const Uint32 RED;
+  const Uint32 GREEN;
   const Uint32 GRAY;
   const Uint32 BLACK;
   const Uint32 color;

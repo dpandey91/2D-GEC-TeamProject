@@ -14,10 +14,10 @@ Health::Health() :
   increments(Gamedata::getInstance().getXmlInt("healthBar/increment")),
   interval(1000),
   deltaTime(0),
-  RED( SDL_MapRGB(screen->format, 0xff, 0x00, 0x00) ),
+  GREEN( SDL_MapRGB(screen->format, 0x00, 0xff, 0x00) ),
   GRAY( SDL_MapRGB(screen->format, 0xce, 0xb4, 0xb4) ),
   BLACK( SDL_MapRGB(screen->format, 0x00, 0x00, 0x00) ),
-  color(RED) {
+  color(GREEN) {
 }
 
 Health::Health(int sx, int sy, int tl, int cl,
@@ -30,7 +30,7 @@ Health::Health(int sx, int sy, int tl, int cl,
   increments(inc),
   interval(sp),
   deltaTime(0),
-  RED( SDL_MapRGB(screen->format, 0xff, 0x00, 0x00) ),
+  GREEN( SDL_MapRGB(screen->format, 0x00, 0xff, 0x00) ),
   GRAY( SDL_MapRGB(screen->format, 0xff, 0xff, 0xff) ),
   BLACK( SDL_MapRGB(screen->format, 0x00, 0x00, 0x00) ),
   color(c) {
