@@ -80,6 +80,7 @@
   <startLoc x="54" y="200"/>
   <xframes>1</xframes>
   <yframes>9</yframes>
+  <yBound>100</yBound>
   <frameInterval>20</frameInterval>
   <speedX>300</speedX>
   <speedY>100</speedY>
