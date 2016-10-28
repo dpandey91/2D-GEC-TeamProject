@@ -16,17 +16,20 @@ typedef struct colorCode{
 
 class HudClass {
 public:
-  HudClass();
-  void drawHud(SDL_Surface * const&, const IOManager&, int seconds, int fps, int health) const;
-
-  void drawLose(SDL_Surface * const& screen, const IOManager& io) const;
-  void drawWin(SDL_Surface * const& screen, const IOManager& io) const;
+  static HudClass& getInstance();
+  ~HudClass();
   
+  void drawHud(SDL_Surface* const, const IOManager&, int seconds, int fps, int health) const;
+
 private:
   const int hudWidth;
   const int hudHeight;
   int xPos;
   int yPos;
   color rgbVal;
+  
+  HudClass();
+  HudClass(const HudClass&);
+  HudClass& operator=(const HudClass&);
 };
 #endif

@@ -17,56 +17,98 @@
 </view>
 
 <world>
-  <width>1500</width>
-  <height>760</height>
+  <width>2500</width>
+  <height>480</height>
 </world>
 
 <frameRateAvg>200</frameRateAvg>
 
-<back>
-  <file>images/background.png</file>
+<layer1>
+  <file>images/layer1.png</file>
   <red>193</red>
   <green>205</green>
   <blue>205</blue>
   <factor>1</factor>
   <transparency>false</transparency>
-</back>
+</layer1>
 
-<map>
-  <file>images/mapsmall2.png</file>
-  <red>193</red>
-  <green>205</green>
-  <blue>205</blue>
-  <factor>1</factor>
-  <transparency>false</transparency>
-</map>
-
-<castleBig>
-  <file>images/castleBig2.png</file>
-  <red>193</red>
-  <green>205</green>
-  <blue>205</blue>
-  <factor>1</factor>
-  <transparency>false</transparency>
-</castleBig>
-
-<castleSmall>
-  <file>images/castleSmall2.png</file>
-  <red>193</red>
-  <green>205</green>
-  <blue>205</blue>
-  <factor>1</factor>
-  <transparency>false</transparency>
-</castleSmall>
-
-<cloud>
-  <file>images/cloud.png</file>
+<layer2>
+  <file>images/layer2.png</file>
   <red>193</red>
   <green>205</green>
   <blue>205</blue>
   <factor>2</factor>
   <transparency>false</transparency>
-</cloud>
+</layer2>
+
+<layer3>
+  <file>images/layer3.png</file>
+  <red>193</red>
+  <green>205</green>
+  <blue>205</blue>
+  <factor>4</factor>
+  <transparency>false</transparency>
+</layer3>
+
+<layer4>
+  <file>images/layer4.png</file>
+  <red>193</red>
+  <green>205</green>
+  <blue>205</blue>
+  <factor>8</factor>
+  <transparency>false</transparency>
+</layer4>
+
+<house>
+  <file>images/house.png</file>
+  <red>193</red>
+  <green>205</green>
+  <blue>205</blue>
+  <factor>2</factor>
+  <transparency>false</transparency>
+</house>
+
+<moon>
+  <file>images/moon.png</file>
+  <startLoc x="50" y="70"/>
+  <transparency>false</transparency>
+</moon>
+
+<boy>
+  <filePositive>images/boyleft.png</filePositive>
+  <fileNegative>images/boyright.png</fileNegative>
+  <startLoc x="54" y="200"/>
+  <xframes>1</xframes>
+  <yframes>9</yframes>
+  <frameInterval>20</frameInterval>
+  <speedX>300</speedX>
+  <speedY>100</speedY>
+  <comeback>true</comeback>
+  <transparency>false</transparency>
+</boy>
+
+<hudBar>
+  <width>350</width>
+  <height>200</height>
+  <startLoc x="30" y="30"/>
+  <color red="255" green="255" blue="0"/>
+</hudBar>
+
+<pumpkin>
+  <file>images/pumpkin.png</file>
+  <startLoc x="0" y="0"/>
+  <endLoc x="3000" y="480"/>
+  <cushion>50</cushion>
+  <noOfObjects actual="3" instances="6" />
+  <scale min="0.2" max="1.2"/>
+  <width>32</width>
+  <height>32</height>
+  <minspeed x="10" y="10"/>
+  <maxspeed x="300" y="200"/>
+  <comeback>true</comeback>
+  <startOver>true</startOver>
+  <transparency>true</transparency>
+</pumpkin>
 
 <font name="font">
   <file>font/dyslexic-bold.otf</file>
@@ -76,70 +118,5 @@
   <blue>255</blue>
   <unused>0</unused>
 </font>
-
-<fireball>
-  <file>images/fireballsheet.png</file>
-  <startLoc x="20" y="70"/>
-  <xframes>1</xframes>
-  <yframes>17</yframes>
-  <frameInterval>80</frameInterval>
-  <speedX>63</speedX>
-  <speedY>o</speedY>
-  <comeback>true</comeback>
-  <transparency>false</transparency>
-</fireball>
-
-<drogon>
-  <filePositive>images/dragonsheet2-right.png</filePositive>
-  <fileNegative>images/dragonsheet2-left.png</fileNegative>
-  <startLoc x="54" y="210"/>
-  <xframes>1</xframes>
-  <yframes>6</yframes>
-  <frameInterval>80</frameInterval>
-  <speedX>60</speedX>
-  <speedY>8</speedY>
-  <comeback>true</comeback>
-  <transparency>false</transparency>
-</drogon>
-
-<viserion>
-  <filePositive>images/dragonsheet3-right.png</filePositive>
-  <fileNegative>images/dragonsheet3-left.png</fileNegative>
-  <startLoc x="67" y="80"/>
-  <xframes>1</xframes>
-  <yframes>20</yframes>
-  <frameInterval>80</frameInterval>
-  <speedX>60</speedX>
-  <speedY>0</speedY>
-  <comeback>true</comeback>
-  <transparency>true</transparency>
-</viserion>
-
-<blackpearl>
-  <file>images/ship2.png</file>
-  <startLoc x="978" y="63"/>
-  <frameInterval>20</frameInterval>
-  <speedX>10</speedX>
-  <speedY>0</speedY>
-  <comeback>false</comeback>
-  <transparency>true</transparency>
-</blackpearl>
-
-<interceptor>
-  <file>images/ship3.png</file>
-  <startLoc x="458" y="88"/>
-  <frameInterval>20</frameInterval>
-  <speedX>10</speedX>
-  <speedY>0</speedY>
-  <comeback>false</comeback>
-  <transparency>true</transparency>
-</interceptor>
-
-<hudBar>
-  <width>350</width>
-  <height>200</height>
-  <startLoc x="30" y="30"/>
-  <color red="255" green="255" blue="0"/>
-</hudBar>
 
 </GameData>

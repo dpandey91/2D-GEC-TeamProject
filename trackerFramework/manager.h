@@ -5,6 +5,10 @@
 #include "world.h"
 #include "viewport.h"
 #include "hudClass.h"
+#include "health.h"
+
+class Player;
+class ScaledSprite;
 
 class Manager {
 public:
@@ -20,10 +24,11 @@ private:
 
   SDL_Surface * const screen;
   World world;
-  World map;
-  World castleBig;
-  World castleSmall;
-  World cloud;
+  World layer2;
+  World layer3;
+  World layer4;
+  World house;
+  
   Viewport& viewport;
 
   std::vector<Drawable*> sprites;
@@ -35,13 +40,23 @@ private:
   const std::string title;
   const int frameMax;
   
-  HudClass hudBar;
+  HudClass& hudBar;
+  Health healthBar;
   int playerHealth;
   bool showHud;
+  
+  Player* player;
+  
+  std::vector<ScaledSprite*> pumpkin;
 
   void draw() const;
   void update();
 
+  void makePumpkins();
+  void drawLayers(unsigned int& iter, const World* worlds = NULL) const;
+  float getScaleFromRange(float start, float end, float pointNumber);
+  Vector2f getScaledVelocity(Vector2f vel, float cushion);
+  
   Manager(const Manager&);
   Manager& operator=(const Manager&);
   void makeFrame();

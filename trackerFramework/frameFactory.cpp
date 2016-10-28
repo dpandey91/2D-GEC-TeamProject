@@ -1,3 +1,4 @@
+#include "SDL/SDL_rotozoom.h"
 #include "frameFactory.h"
 #include "extractSurface.h"
 #include "ioManager.h"
@@ -54,6 +55,33 @@ Frame* FrameFactory::getFrame(const std::string& name) {
     return pos->second;
   }
 }
+
+Frame* FrameFactory::getScaledFrame(const std::string& name, float scale, int iter) {
+  char intStr[2];
+  snprintf(intStr, sizeof(intStr), "%d", iter);
+  string str(intStr);  
+  
+  std::string key = name+str;  
+  std::map<std::string, Frame*>::const_iterator pos = frames.find(key); 
+  if ( pos == frames.end() ) {
+    SDL_Surface * const surface =
+      IOManager::getInstance().loadAndSet(
+          gdata.getXmlStr(name+"/file"),
+          gdata.getXmlBool(name+"/transparency"));
+          
+    SDL_Surface* const scaledSurface = rotozoomSurface(surface, 0, scale, SMOOTHING_ON);
+    
+    SDL_FreeSurface( surface );
+    surfaces[key] = scaledSurface;
+    Frame * const frame = new Frame(scaledSurface);
+    frames[key] = frame;
+    return frame;
+  }
+  else {
+    return pos->second;
+  }
+}
+
 
 std::vector<Frame*> FrameFactory::getFrames(const std::string& name) {
   // First search map to see if we've already made it:

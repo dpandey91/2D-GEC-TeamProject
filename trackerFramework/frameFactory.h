@@ -26,6 +26,8 @@ public:
   // and ExtractSurface is not used. This surface is passed to Frame.
   Frame* getFrame(const std::string&);
 
+  Frame* getScaledFrame(const std::string& name, float scale, int iter);
+  
   // The next constructor is for a MultiSprite, a multi-frame sprite.
   // The sprite sheet surface is saved in the surfaces map, and
   // individual surfaces will be extracted, using ExtractSurface, from 

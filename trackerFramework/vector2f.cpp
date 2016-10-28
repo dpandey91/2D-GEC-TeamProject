@@ -35,6 +35,14 @@ Vector2f Vector2f::operator/(float scale) const {
 	return Vector2f(v[0] / scale, v[1] / scale);
 }
 
+Vector2f Vector2f::operator+(float scale) const {
+  return Vector2f(v[0] + scale, v[1] + scale);
+}
+
+Vector2f Vector2f::operator-(float scale) const {
+  return Vector2f(v[0] - scale, v[1] - scale);
+}
+
 Vector2f Vector2f::operator+(const Vector2f &other) const {
 	return Vector2f(v[0] + other.v[0], v[1] + other.v[1]);
 }

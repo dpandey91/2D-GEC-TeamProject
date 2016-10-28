@@ -5,6 +5,11 @@
 #include "gamedata.h"
 #include "aaline.h"
 
+HudClass& HudClass::getInstance(){
+    static HudClass instance;
+    return instance;
+}
+
 HudClass::HudClass():
     hudWidth(Gamedata::getInstance().getXmlInt("hudBar/width")),
     hudHeight(Gamedata::getInstance().getXmlInt("hudBar/height")),
@@ -15,7 +20,10 @@ HudClass::HudClass():
            Gamedata::getInstance().getXmlInt("hudBar/color/green"))
 {}
 
-void HudClass::drawHud(SDL_Surface * const& screen, const IOManager& io, int seconds, int fps, int health) const{
+HudClass::~HudClass()
+{}
+
+void HudClass::drawHud(SDL_Surface* const screen, const IOManager& io, int seconds, int fps, int health) const{
 
     const Uint32 color = SDL_MapRGB(screen->format, rgbVal.red, rgbVal.blue, rgbVal.green);
     Draw_AALine(screen, xPos, yPos+hudHeight/2, xPos+hudWidth, yPos+hudHeight/2, hudHeight, 0, 0, 0, 0xff/2);

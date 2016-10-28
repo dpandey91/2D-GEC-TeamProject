@@ -8,7 +8,7 @@ class TwoWayMultiSprite : public MultiSprite {
 public:
   TwoWayMultiSprite(const std::string&);
   TwoWayMultiSprite(const TwoWayMultiSprite&);
-  virtual ~TwoWayMultiSprite() { } 
+  virtual ~TwoWayMultiSprite() { };
 
 protected:
   virtual void advanceFrame(Uint32 ticks);

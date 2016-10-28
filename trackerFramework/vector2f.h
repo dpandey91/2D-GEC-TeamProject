@@ -25,6 +25,9 @@ public:
   Vector2f operator-(const Vector2f &other) const;
   Vector2f operator-() const;
 		
+  Vector2f operator-(float scale) const;
+  Vector2f operator+(float scale) const;
+        
   const Vector2f &operator*=(float scale);
   const Vector2f &operator/=(float scale);
   const Vector2f &operator+=(const Vector2f &other);
