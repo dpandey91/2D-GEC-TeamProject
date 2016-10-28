@@ -7,12 +7,13 @@
 
 class Health {
 public:
-  Health();
-  Health(int sx, int sy, int tl, int cl, 
-         float t, int inc, Uint32 c, float sp);
+  static Health& getInstance();
+  
   void draw() const;
   void update(Uint32);
   void reset() { currentLength = totalLength; }
+  int getHealth() { return currentLength; }
+  
 private:
   SDL_Surface* screen;
   Vector2f start;
@@ -27,6 +28,10 @@ private:
   const Uint32 BLACK;
   const Uint32 color;
   void drawBox() const;
+  
+  Health();
+  Health(int sx, int sy, int tl, int cl, 
+         float t, int inc, Uint32 c, float sp);
   Health(const Health&);
   Health& operator=(const Health&);
 };

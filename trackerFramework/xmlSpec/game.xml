@@ -90,9 +90,18 @@
 <hudBar>
   <width>350</width>
   <height>200</height>
-  <startLoc x="30" y="30"/>
+  <startLoc x="490" y="20"/>
   <color red="255" green="255" blue="0"/>
+  <time>5</time>
 </hudBar>
+
+<healthBar>
+  <startLoc x="20" y="100"/>
+  <length>200</length>
+  <increment>2</increment>
+  <thick>14</thick>
+  <moveCount>50</moveCount>
+</healthBar>
 
 <pumpkin>
   <file>images/pumpkin.png</file>

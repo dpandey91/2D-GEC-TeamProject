@@ -1,6 +1,7 @@
 #include "player.h"
 #include "gamedata.h"
 #include "frameFactory.h"
+#include "health.h"
 
 Player::Player( const std::string& name) :
   TwoWayMultiSprite(name),
@@ -102,18 +103,19 @@ void Player::move(const float& incr){
 
 void Player::update(Uint32 ticks) {
   
-  if(currState == WALK){
+  if(Health::getInstance().getHealth() > 0){
+      if(currState == WALK){
       float incr =  static_cast<float>(ticks) * 0.0005;
       move(incr);
       advanceFrame(ticks);
-  }
-  else{
-      
-    if(velocityX() >= 0){
-        currentFrame = 2;
     }
     else{
+      if(velocityX() >= 0){
+        currentFrame = 2;
+      }
+      else{
         currentFrame = 2+numberOfFrames/2;
+      }
     }
   }
 }

@@ -54,9 +54,13 @@ Manager::Manager() :
   title( Gamedata::getInstance().getXmlStr("screenTitle") ),
   frameMax( Gamedata::getInstance().getXmlInt("frameMax") ),
   hudBar( HudClass::getInstance() ),
-  healthBar(),
+  healthBar( Health::getInstance() ),
   playerHealth(100),
+  hudTime( Gamedata::getInstance().getXmlInt("hudBar/time") ),
   showHud(false),
+  isWalk(false),
+  playerMoveCount(Gamedata::getInstance().getXmlInt("healthBar/moveCount")),
+  moveTick(0),
   player(new Player("boy")),
   pumpkin()
 {
@@ -67,13 +71,6 @@ Manager::Manager() :
   atexit(SDL_Quit);
   
   makePumpkins();
-  
-  /*layers.push_back(World("layer2", Gamedata::getInstance().getXmlInt("layer2/factor")));
-  layers.push_back(World("layer3", Gamedata::getInstance().getXmlInt("layer3/factor")));
-  layers.push_back(World("layer4", Gamedata::getInstance().getXmlInt("layer4/factor")));
-  layers.push_back(World("layer5", Gamedata::getInstance().getXmlInt("layer5/factor")));
-  layers.push_back(World("layer6", Gamedata::getInstance().getXmlInt("layer6/factor")));*/
-  
   sprites.push_back(player);  
   viewport.setObjectToTrack(sprites[currentSprite]);
 }
@@ -165,14 +162,12 @@ void Manager::draw() const {
   }
   
   // TODO: Replace 3 with xml value
-  if(clock.getSeconds() < 3 || showHud){
+  if(clock.getSeconds() < hudTime || showHud){
     hudBar.drawHud(screen, io, clock.getSeconds(), clock.getAvgFrameRate(), playerHealth);
-    healthBar.draw();
   }  
-  
-  //io.printMessageValueAt("Seconds: ", clock.getSeconds(), 10, 20);
-  //io.printMessageValueAt("fps: ", clock.getAvgFrameRate(), 10, 40);
-  //io.printMessageAt("Press T to switch sprites", 10, 65);
+
+  healthBar.draw();  
+  io.printMessageAt("Press T to switch sprites", 10, 65);
   io.printMessageAt(title, 10, 450);
   viewport.draw();
  
@@ -216,7 +211,16 @@ void Manager::update() {
     makeFrame();
   }
   
-  healthBar.update(ticks);
+  if(isWalk){
+    if(moveTick > 10){
+      healthBar.update(ticks);
+      moveTick = 0;    
+    }
+    else{
+      moveTick++;
+    }    
+  } 
+    
   world.update();
   layer2.update();
   layer3.update();
@@ -235,7 +239,7 @@ void Manager::play() {
       Uint8 *keystate = SDL_GetKeyState(NULL);
       
       if (event.type ==  SDL_QUIT) { done = true; break; }
-      if(event.type == SDL_KEYUP) { keyCatch = false; player->stop();}
+      if(event.type == SDL_KEYUP) { keyCatch = false; isWalk = false; player->stop();}
       
       if(event.type == SDL_KEYDOWN) {
         if (keystate[SDLK_ESCAPE] || keystate[SDLK_q]) {
@@ -273,14 +277,22 @@ void Manager::play() {
         
         if (keystate[SDLK_a] ) {
           player->moveLeft();
+          isWalk = true;
         }
         
         if (keystate[SDLK_d] ) {
           player->moveRight();
+          isWalk = true;
         }
         
         if (keystate[SDLK_s] ) {
           player->moveDown();
+          isWalk = true;
+        }
+        
+        if (keystate[SDLK_w] ) {
+	      player->moveUp();
+          isWalk = true;
         }
         
         if (keystate[SDLK_z] ) {
@@ -288,11 +300,11 @@ void Manager::play() {
         }
        
         if (keystate[SDLK_x] ) {
-              player->decreaseVelocity(1.5);
+          player->decreaseVelocity(1.5);
         }
         
-        if (keystate[SDLK_w] ) {
-	      player->moveUp();
+        if (keystate[SDLK_k] ) {
+          healthBar.reset();
         }
       }
     }

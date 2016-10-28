@@ -41,9 +41,13 @@ private:
   const int frameMax;
   
   HudClass& hudBar;
-  Health healthBar;
+  Health& healthBar;
   int playerHealth;
+  unsigned int hudTime;
   bool showHud;
+  bool isWalk;
+  unsigned int playerMoveCount;
+  unsigned int moveTick;
   
   Player* player;
   

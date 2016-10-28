@@ -1,12 +1,17 @@
 #include "health.h"
 
+Health& Health::getInstance(){
+    static Health instance;
+    return instance;
+}
+
 Health::Health() :
   screen(IOManager::getInstance().getScreen()),
-  start(Vector2f(20, 100)), 
-  totalLength(200), 
-  currentLength(200), 
-  thick(14), 
-  increments(20),
+  start(Vector2f(Gamedata::getInstance().getXmlInt("healthBar/startLoc/x"), Gamedata::getInstance().getXmlInt("healthBar/startLoc/x"))), 
+  totalLength(Gamedata::getInstance().getXmlInt("healthBar/length")), 
+  currentLength(Gamedata::getInstance().getXmlInt("healthBar/length")), 
+  thick(Gamedata::getInstance().getXmlInt("healthBar/thick")), 
+  increments(Gamedata::getInstance().getXmlInt("healthBar/increment")),
   interval(1000),
   deltaTime(0),
   RED( SDL_MapRGB(screen->format, 0xff, 0x00, 0x00) ),
@@ -24,11 +29,11 @@ Health::Health(int sx, int sy, int tl, int cl,
   thick(t), 
   increments(inc),
   interval(sp),
-  deltaTime(SDL_GetTicks()),
+  deltaTime(0),
   RED( SDL_MapRGB(screen->format, 0xff, 0x00, 0x00) ),
   GRAY( SDL_MapRGB(screen->format, 0xff, 0xff, 0xff) ),
   BLACK( SDL_MapRGB(screen->format, 0x00, 0x00, 0x00) ),
-    color(c) {
+  color(c) {
 }
 
 void Health::drawBox() const {
@@ -58,8 +63,8 @@ void Health::draw() const {
                       thick, color);
 }
 void Health::update(Uint32 ticks) {
-  deltaTime += ticks;
-  if ( currentLength > 0 && deltaTime > interval ) {
+  
+  if ( currentLength > 0) {
     deltaTime = 0;
     currentLength -= increments;
   }
