@@ -128,13 +128,13 @@
 <ghost>
   <file>images/ghost.png</file>
   <startLoc x="404" y="150"/>
-  <endLoc x="1000" y="320"/>
+  <endLoc x="1000" y="400"/>
   <frameInterval>20</frameInterval>
   <speed x="-130" y="-10"/>
   <comeback>true</comeback>
   <yBound>70</yBound>
   <xAdd min="600" max="900"/>
-  <yAdd min="30" max="100"/>
+  <yAdd min="30" max="80"/>
   <noOfObjects>5</noOfObjects>
   <transparency>true</transparency>
   <chunk>
