@@ -22,6 +22,8 @@ public:
   const Drawable* getObjectToTrack() const { return objectToTrack; }
   Vector2f getObjectPosition();
   Vector2f getObjectVelocity();
+  
+  void reset(){position[0] = 0; position[1] = 0;}
 
 private:
   const Gamedata& gdata;

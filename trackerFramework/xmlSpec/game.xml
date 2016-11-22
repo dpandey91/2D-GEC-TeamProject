@@ -88,8 +88,8 @@
   <transparency>false</transparency>
   <chunk>
     <comeback>false</comeback>
-    <size>30</size>
-    <distance>100</distance>
+    <size>15</size>
+    <distance>60</distance>
   </chunk>
 </boy>
 
@@ -127,20 +127,20 @@
 
 <ghost>
   <file>images/ghost.png</file>
-  <startLoc x="304" y="150"/>
-  <endLoc x="1050" y="400"/>
+  <startLoc x="404" y="150"/>
+  <endLoc x="1000" y="400"/>
   <frameInterval>20</frameInterval>
-  <speed x="-100" y="-10"/>
+  <speed x="-130" y="-10"/>
   <comeback>true</comeback>
   <yBound>70</yBound>
-  <xAdd min="300" max="600"/>
-  <yAdd min="5" max="10"/>
-  <noOfObjects>6</noOfObjects>
+  <xAdd min="600" max="900"/>
+  <yAdd min="30" max="100"/>
+  <noOfObjects>4</noOfObjects>
   <transparency>true</transparency>
   <chunk>
     <comeback>false</comeback>
-    <size>30</size>
-    <distance>150</distance>
+    <size>15</size>
+    <distance>50</distance>
   </chunk>
 </ghost>
 

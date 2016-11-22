@@ -129,7 +129,6 @@ void Player::move(const float& incr){
 }
 
 void Player::draw() const{
-   
   if(currState == EXPLODE && explosion && explosion->chunkCount() != 0){
     explosion->draw();
   }
@@ -140,8 +139,7 @@ void Player::draw() const{
 }
 
 void Player::update(Uint32 ticks) {
-  
-  if(currState == EXPLODE && explosion){
+  if(explosion){
       explosion->update(ticks);
       if(explosion->chunkCount() == 0){
           delete explosion;

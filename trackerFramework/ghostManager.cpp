@@ -24,7 +24,6 @@ GhostManager::~GhostManager(){
 }
 
 void GhostManager::makeGhosts(){
-  
   //Creating ghosts
   int noOfGhosts = Gamedata::getInstance().getXmlInt(name+"/noOfObjects");
   Ghost* ghostSprite = NULL;
@@ -32,7 +31,7 @@ void GhostManager::makeGhosts(){
   for(int i =0; i < noOfGhosts; i++){
   
     Vector2f position(Gamedata::getInstance().getRandFloat(Gamedata::getInstance().getXmlInt(name+"/startLoc/x"), Gamedata::getInstance().getXmlInt(name+      "/endLoc/x")), Gamedata::getInstance().getRandFloat(Gamedata::getInstance().getXmlInt(name+"/startLoc/y"), Gamedata::getInstance().getXmlInt(name+"/endLoc/y")));
-                  
+                     
     if(!ghostSprite){
         ghostSprite = new Ghost(name, position, velocity);
         dumbGhosts.push_back(ghostSprite);
@@ -53,13 +52,11 @@ void GhostManager::draw() const{
 
 void GhostManager::update(unsigned int ticks){
   std::list<Ghost*>::const_iterator ptr = dumbGhosts.begin();
-  int i = 0;
   while(ptr != dumbGhosts.end()) {
      (*ptr)->update(ticks);
      
      float x1 = viewport.X();
      float x2 = viewport.X() + viewport.getWidth();
-     float y1 = viewport.Y();
      float y2 = viewport.Y() + viewport.getHeight();
      
      Vector2f objectVel = viewport.getObjectVelocity();
@@ -94,7 +91,7 @@ Vector2f GhostManager::getScaledPosition(Vector2f position, float cushion)
 void GhostManager::checkForCollisions(Player* player) {
   std::list<Ghost*>::iterator iter = dumbGhosts.begin();
   while ( iter != dumbGhosts.end() ) {
-    if((*iter)->isExploded() || (*iter)->X() < viewport.X() || (*iter)->X() > viewport.X() + viewport.getWidth()) {
+    if((*iter)->isObjExploded() || (*iter)->X() < viewport.X() || (*iter)->X() > viewport.X() + viewport.getWidth()) {
         ++iter;
     }
     else if (player->collidedWithBullets(*iter)){
@@ -102,6 +99,8 @@ void GhostManager::checkForCollisions(Player* player) {
         ++iter;
     }
     else if(player->collidedWith(*iter)){
+        //if(!player->isObjExploded())
+        //    player->explode();
         break;
     }
     else ++iter;

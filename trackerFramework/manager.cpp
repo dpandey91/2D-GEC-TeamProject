@@ -118,8 +118,7 @@ void Manager::makePumpkins() {
     Vector2f velocity(xVel, yVel);
     ScaledSprite* scaledSprite = NULL;
     for(unsigned j = 0; j < (actual-i)*instances; j++){
-        Vector2f position(Gamedata::getInstance().getRandFloat(Gamedata::getInstance().getXmlInt(name+"/startLoc/x"), Gamedata::getInstance().getXmlInt(name+"/endLoc/x")), 
-                          Gamedata::getInstance().getRandFloat(Gamedata::getInstance().getXmlInt(name+"/startLoc/y"), Gamedata::getInstance().getXmlInt(name+"/endLoc/y")));  
+        Vector2f position(Gamedata::getInstance().getRandFloat(Gamedata::getInstance().getXmlInt(name+"/startLoc/x"), Gamedata::getInstance().getXmlInt(name+"/endLoc/x")), Gamedata::getInstance().getRandFloat(Gamedata::getInstance().getXmlInt(name+"/startLoc/y"), Gamedata::getInstance().getXmlInt(name+"/endLoc/y")));  
 
         if(!scaledSprite){
             scaledSprite = new ScaledSprite(name, position, getScaledVelocity(velocity, cushion), scale, i);
@@ -217,9 +216,6 @@ void Manager::update() {
     pumpkin[i]->update(ticks);
   }
 
-  ghostMgr.checkForCollisions(player);
-  ghostMgr.update(ticks);
-  
   if ( makeVideo && frameCount < frameMax ) {
     makeFrame();
   }
@@ -228,6 +224,8 @@ void Manager::update() {
     player->stop();
   }
   player->update(ticks);
+  ghostMgr.checkForCollisions(player);
+  ghostMgr.update(ticks);
   
   world.update();
   layer2.update();
@@ -273,6 +271,7 @@ void Manager::play() {
         }
         
         if (keystate[SDLK_r] && !keyCatch) {
+          viewport.reset();
           clock.start();
           player->resetPosition();
           ghostMgr.reset();

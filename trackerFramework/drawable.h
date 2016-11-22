@@ -51,7 +51,7 @@ public:
     throw std::string("No explode");  
   }
   
-  bool isExploded() { return bExploded; }
+  bool isObjExploded() { return bExploded; }
 
 protected:
   bool bComeback;

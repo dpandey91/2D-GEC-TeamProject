@@ -18,7 +18,7 @@ public:
   void reset();
   bool isTooFar() const {return tooFar;}
   void setStrategy(CollisionStrategy* aStrategy);
-  void increaseFrame(int cFrame = -1);
+  void increaseFrame();
   
 private:
   float maxDistance;

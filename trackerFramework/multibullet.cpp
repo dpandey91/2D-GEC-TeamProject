@@ -39,9 +39,11 @@ bool MultiBullet::collidedWith(const Drawable* d) {
 }
 
 void MultiBullet::advanceFrame(Uint32 ticks) {
+    timeSinceLastFrame += ticks;
+    timeSinceLastFrame = 0;
 }
 
-void MultiBullet::increaseFrame(int cFrame){
+void MultiBullet::increaseFrame(){
   if(velocityX() >= 0){
     currentFrame = (currentFrame+1) % (numberOfFrames/2);
   }
