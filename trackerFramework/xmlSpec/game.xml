@@ -128,7 +128,7 @@
 <ghost>
   <file>images/ghost.png</file>
   <startLoc x="404" y="150"/>
-  <endLoc x="1000" y="400"/>
+  <endLoc x="1000" y="320"/>
   <frameInterval>20</frameInterval>
   <speed x="-130" y="-10"/>
   <comeback>true</comeback>
