@@ -56,7 +56,9 @@ private:
   void update();
 
   void makePumpkins();
-  void drawLayers(unsigned int& iter, const World* worlds = NULL) const;
+  void makeGhosts(const std::string& name);
+  void checkForCollisions();
+  void drawLayers(unsigned int& iter) const;
   float getScaleFromRange(float start, float end, float pointNumber);
   Vector2f getScaledVelocity(Vector2f vel, float cushion);
   

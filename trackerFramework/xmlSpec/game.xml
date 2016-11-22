@@ -82,10 +82,15 @@
   <yframes>9</yframes>
   <yBound>150</yBound>
   <frameInterval>50</frameInterval>
-  <speedX>300</speedX>
-  <speedY>100</speedY>
+  <speedX>350</speedX>
+  <speedY>200</speedY>
   <comeback>true</comeback>
   <transparency>false</transparency>
+  <chunk>
+    <comeback>false</comeback>
+    <size>30</size>
+    <distance>100</distance>
+  </chunk>
 </boy>
 
 <hudBar>
@@ -109,7 +114,7 @@
   <startLoc x="0" y="0"/>
   <endLoc x="3000" y="480"/>
   <cushion>50</cushion>
-  <noOfObjects actual="3" instances="6"/>
+  <noOfObjects actual="2" instances="6"/>
   <scale min="0.2" max="1.2"/>
   <width>32</width>
   <height>32</height>
@@ -119,6 +124,47 @@
   <startOver>true</startOver>
   <transparency>true</transparency>
 </pumpkin>
+
+<ghost>
+  <file>images/ghost.png</file>
+  <startLoc x="404" y="150"/>
+  <endLoc x="800" y="380"/>
+  <frameInterval>20</frameInterval>
+  <speed x="-40" y="0"/>
+  <comeback>true</comeback>
+  <yBound>50</yBound>
+  <xAdd min="300" max="600"/>
+  <yAdd min="5" max="10"/>
+  <noOfObjects>3</noOfObjects>
+  <transparency>true</transparency>
+  <chunk>
+    <comeback>false</comeback>
+    <size>30</size>
+    <distance>150</distance>
+  </chunk>
+</ghost>
+
+<bullet>
+  <file>images/b.bmp</file>
+  <comeback>false</comeback>
+  <totalInstance>5</totalInstance>
+  <startLoc x="50" y="470"/>
+  <xframes>1</xframes>
+  <yframes>1</yframes>
+  <frameInterval>20</frameInterval>
+  <width>44</width>
+  <height>11</height>
+  <speedX>90</speedX>
+  <speedY>0</speedY>
+  <bulletSpeed>400</bulletSpeed>
+  <distance>400</distance>
+  <transparency>true</transparency>
+  <chunk>
+    <comeback>false</comeback>
+    <size>10</size>
+    <distance>100</distance>
+  </chunk>
+</bullet>
 
 <font name="font">
   <file>font/dyslexic-bold.otf</file>

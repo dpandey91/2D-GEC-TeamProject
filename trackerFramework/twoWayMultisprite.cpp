@@ -25,6 +25,10 @@ TwoWayMultiSprite::TwoWayMultiSprite( const std::string& name) :
   MultiSprite(name, FrameFactory::getInstance().getTwoWayFrames(name), 2)
 { }
 
+TwoWayMultiSprite::TwoWayMultiSprite( const std::string& name, const Vector2f& pos, const Vector2f& vel):
+  MultiSprite(name, pos, vel, FrameFactory::getInstance().getTwoWayFrames(name), 2)
+{ }
+
 TwoWayMultiSprite::TwoWayMultiSprite(const TwoWayMultiSprite& s) :
   MultiSprite(s)
 { }

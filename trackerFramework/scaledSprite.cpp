@@ -4,8 +4,7 @@
 #include "frameFactory.h"
 
 ScaledSprite::ScaledSprite(const std::string& name, const Vector2f& pos, const Vector2f& vel, float aScale, const int iter) :
-  Sprite(Gamedata::getInstance().getXmlBool(name+"/comeback"),
-         name,
+  Sprite(name,
          pos,
          vel,
          FrameFactory::getInstance().getScaledFrame(name, aScale, iter)),
@@ -13,8 +12,7 @@ ScaledSprite::ScaledSprite(const std::string& name, const Vector2f& pos, const V
 {}
 
 ScaledSprite::ScaledSprite(const std::string& name, const Vector2f& pos, const Vector2f& vel, const Frame* frm, float aScale) :
-  Sprite(Gamedata::getInstance().getXmlBool(name+"/comeback"),
-         name, pos, vel, frm),
+  Sprite(name, pos, vel, frm),
   scale(aScale)
 { }
 

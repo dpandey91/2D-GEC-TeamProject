@@ -11,6 +11,7 @@
 #include "manager.h"
 #include "player.h"
 #include "scaledSprite.h"
+#include "ghost.h"
 
 class ScaledSpriteCompare {
 public:
@@ -28,6 +29,11 @@ Manager::~Manager() {
      delete pumpkin[i];
   }
   pumpkin.clear();
+  
+  if(player){
+      delete player;
+      player = NULL;
+  }
   
   for (unsigned i = 0; i < sprites.size(); ++i) {
     delete sprites[i];
@@ -70,8 +76,28 @@ Manager::Manager() :
   atexit(SDL_Quit);
   
   makePumpkins();
-  sprites.push_back(player);
-  viewport.setObjectToTrack(sprites[currentSprite]);
+  makeGhosts("ghost");
+  viewport.setObjectToTrack(player);
+}
+
+void Manager::makeGhosts(const std::string& name){
+  
+  //Creating ghosts
+  int noOfGhosts = Gamedata::getInstance().getXmlInt(name+"/noOfObjects");
+  Sprite* ghostSprite = NULL;
+  Vector2f velocity(Gamedata::getInstance().getXmlFloat(name+"/speed/x"), Gamedata::getInstance().getXmlFloat(name+"/speed/y"));
+  for(int i =0; i < noOfGhosts; i++){
+  
+    Vector2f position(Gamedata::getInstance().getRandFloat(Gamedata::getInstance().getXmlInt(name+"/startLoc/x"), Gamedata::getInstance().getXmlInt(name+      "/endLoc/x")), Gamedata::getInstance().getRandFloat(Gamedata::getInstance().getXmlInt(name+"/startLoc/y"), Gamedata::getInstance().getXmlInt(name+"/endLoc/y")));
+                  
+    if(!ghostSprite){
+        ghostSprite = new Ghost(name, position, velocity);
+        sprites.push_back(ghostSprite);
+    }
+    else{
+        sprites.push_back(new Ghost(ghostSprite->getName(), position, velocity, ghostSprite->getFrame()));   
+    }
+  }
 }
 
 float Manager::getScaleFromRange(float start, float end, float pointNumber)
@@ -120,14 +146,14 @@ void Manager::makePumpkins() {
             pumpkin.push_back(scaledSprite);
         }
         else{
-            pumpkin.push_back(new ScaledSprite(scaledSprite->getName(), position, getScaledVelocity(velocity, cushion), scaledSprite->getFrame(), scale));    
+            pumpkin.push_back(new ScaledSprite(scaledSprite->getName(), position, getScaledVelocity(velocity, cushion), scaledSprite->getFrame(), scale));   
         }
      }
   }
   sort(pumpkin.begin(), pumpkin.end(), ScaledSpriteCompare());
 }
 
-void Manager::drawLayers(unsigned int& iter, const World* worlds) const{
+void Manager::drawLayers(unsigned int& iter) const{
   if(iter < pumpkin.size()){
     float scale = pumpkin[iter]->getScale();
     while(iter < pumpkin.size()) {
@@ -136,9 +162,6 @@ void Manager::drawLayers(unsigned int& iter, const World* worlds) const{
         ++iter;
       }
       else{
-        scale = pumpkin[iter]->getScale();
-        if(worlds != NULL)
-            worlds->draw();
         break;
       }
     }    
@@ -150,14 +173,24 @@ void Manager::draw() const {
   world.draw();
   
   unsigned int iter = 0;
-  drawLayers(iter, &layer2);
+  drawLayers(iter);
+  layer2.draw();
   house.draw();
-  drawLayers(iter, &layer3);
+  drawLayers(iter);
+  layer3.draw();
   layer4.draw();
   drawLayers(iter);
   
-  for (unsigned i = 0; i < sprites.size(); ++i) {
-    sprites[i]->draw();
+  std::vector<Drawable*>::const_iterator ptr = sprites.begin();
+  while(ptr != sprites.end() && (*ptr)->Y() + (*ptr)->getFrame()->getHeight() < player->Y() + (*ptr)->getFrame()->getHeight()) {
+    (*ptr)->draw();
+    ptr++;
+  }
+  player->draw();
+  
+  while(ptr != sprites.end()) {
+    (*ptr)->draw();
+    ptr++;
   }
   
   if(clock.getSeconds() < hudTime || showHud){
@@ -182,8 +215,7 @@ void Manager::makeFrame() {
 }
 
 void Manager::switchSprite() {
-  currentSprite = (currentSprite+1) % sprites.size();
-  viewport.setObjectToTrack(sprites[currentSprite]);
+  viewport.setObjectToTrack(player);
 }
 
 void Manager::update() {
@@ -200,6 +232,7 @@ void Manager::update() {
     pumpkin[i]->update(ticks);
   }
 
+  checkForCollisions();
   for (unsigned int i = 0; i < sprites.size(); ++i) {
     sprites[i]->update(ticks);
   }
@@ -208,16 +241,11 @@ void Manager::update() {
     makeFrame();
   }
   
-  if(isWalk){
-    if(moveTick > 10){
-      healthBar.update();
-      moveTick = 0;    
-    }
-    else{
-      moveTick++;
-    }    
-  } 
-    
+  if(!isWalk){
+    player->stop();
+  }
+  player->update(ticks);
+  
   world.update();
   layer2.update();
   layer3.update();
@@ -236,7 +264,14 @@ void Manager::play() {
       Uint8 *keystate = SDL_GetKeyState(NULL);
       
       if (event.type ==  SDL_QUIT) { done = true; break; }
-      if(event.type == SDL_KEYUP) { keyCatch = false; isWalk = false; player->stop();}
+      if(event.type == SDL_KEYUP) { 
+        keyCatch = false;
+        
+        if(event.key.keysym.sym == SDLK_a || event.key.keysym.sym == SDLK_s
+            || event.key.keysym.sym == SDLK_d || event.key.keysym.sym == SDLK_w){
+            isWalk = false;
+        }
+      }
       
       if(event.type == SDL_KEYDOWN) {
         if (keystate[SDLK_ESCAPE] || keystate[SDLK_q]) {
@@ -253,8 +288,17 @@ void Manager::play() {
           if ( clock.isPaused() ) clock.unpause();
           else clock.pause();
         }
-        if ( keystate[SDLK_d] ) {
-          
+        
+        if (keystate[SDLK_r] && !keyCatch) {
+          player->resetPosition();
+          std::vector<Drawable*>::iterator iter = sprites.begin();
+          while ( iter != sprites.end() ) {
+              (dynamic_cast<Ghost*>(*iter))->resetPosition();
+              ++iter;
+          }
+          clock.start();
+          healthBar.reset();
+          keyCatch = true;
         }
         
         if (keystate[SDLK_F4] && !makeVideo) {
@@ -264,12 +308,7 @@ void Manager::play() {
        
         if (keystate[SDLK_F1] && !keyCatch) {
           keyCatch = true;
-          if(!showHud){
-            showHud=true;
-	      }
-          else{
-            showHud=false;
-          }
+          showHud = !showHud;
         }
         
         if (keystate[SDLK_a] ) {
@@ -303,10 +342,32 @@ void Manager::play() {
         if (keystate[SDLK_k] ) {
           healthBar.reset();
         }
+       
+        if (keystate[SDLK_n] ) {
+          player->shoot();
+        }
       }
     }
     
     draw();
     update();
+  }
+}
+
+void Manager::checkForCollisions() {
+  std::vector<Drawable*>::iterator iter = sprites.begin();
+  while ( iter != sprites.end() ) {
+    if((*iter)->isExploded() || (*iter)->X() < viewport.X() || (*iter)->X() > viewport.X() + viewport.getWidth()) {
+        ++iter;
+    }
+    else if ( player->collidedWithBullets(*iter) ){
+        (*iter)->explode();
+        ++iter;
+    }
+    else if(player->collidedWith(*iter)){
+        healthBar.update();
+        break;
+    }
+    else ++iter;
   }
 }

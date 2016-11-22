@@ -18,8 +18,8 @@ Sprite::Sprite(const std::string& name) :
   worldHeight(Gamedata::getInstance().getXmlInt("world/height"))
 { }
 
-Sprite::Sprite(const bool aComeback, const string& n, const Vector2f& pos, const Vector2f& vel):
-  Drawable(aComeback, n, pos, vel), 
+Sprite::Sprite(const string& n, const Vector2f& pos, const Vector2f& vel):
+  Drawable(Gamedata::getInstance().getXmlBool(n+"/comeback"), n, pos, vel), 
   frame( FrameFactory::getInstance().getFrame(n) ),
   frameWidth(frame->getWidth()),
   frameHeight(frame->getHeight()),
@@ -27,8 +27,8 @@ Sprite::Sprite(const bool aComeback, const string& n, const Vector2f& pos, const
   worldHeight(Gamedata::getInstance().getXmlInt("world/height"))
 { }
 
-Sprite::Sprite(const bool aComeback, const string& n, const Vector2f& pos, const Vector2f& vel, const Frame* frm):
-  Drawable(aComeback, n, pos, vel), 
+Sprite::Sprite(const string& n, const Vector2f& pos, const Vector2f& vel, const Frame* frm):
+  Drawable(Gamedata::getInstance().getXmlBool(n+"/comeback"), n, pos, vel), 
   frame( frm ),
   frameWidth(frame->getWidth()),
   frameHeight(frame->getHeight()),

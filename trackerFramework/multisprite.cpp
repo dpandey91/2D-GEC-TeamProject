@@ -48,6 +48,39 @@ MultiSprite::MultiSprite(const std::string& name, const std::vector<Frame *>& fm
   frameHeight(frames[0]->getHeight())
 { }
 
+MultiSprite::MultiSprite( const std::string& name, const Vector2f& pos, const Vector2f& vel):
+  Drawable(Gamedata::getInstance().getXmlBool(name+"/comeback"),
+           name,
+           pos,
+           vel),
+  frames( FrameFactory::getInstance().getFrames(name) ),
+  worldWidth(Gamedata::getInstance().getXmlInt("world/width")),
+  worldHeight(Gamedata::getInstance().getXmlInt("world/height")),
+  currentFrame(0),
+  numberOfFrames( Gamedata::getInstance().getXmlInt(name+"/xframes") * Gamedata::getInstance().getXmlInt(name+"/yframes") ),
+  frameInterval( Gamedata::getInstance().getXmlInt(name+"/frameInterval") ),
+  timeSinceLastFrame( 0 ),
+  frameWidth(frames[0]->getWidth()),
+  frameHeight(frames[0]->getHeight())
+{ }
+
+
+MultiSprite::MultiSprite( const std::string& name, const Vector2f& pos, const Vector2f& vel, const std::vector<Frame*>& fms, const int nFrameMul):
+  Drawable(Gamedata::getInstance().getXmlBool(name+"/comeback"),
+           name,
+           pos,
+           vel),
+  frames(fms),
+  worldWidth(Gamedata::getInstance().getXmlInt("world/width")),
+  worldHeight(Gamedata::getInstance().getXmlInt("world/height")),
+  currentFrame(0),
+  numberOfFrames( Gamedata::getInstance().getXmlInt(name+"/xframes") * Gamedata::getInstance().getXmlInt(name+"/yframes") * nFrameMul),
+  frameInterval( Gamedata::getInstance().getXmlInt(name+"/frameInterval") ),
+  timeSinceLastFrame( 0 ),
+  frameWidth(frames[0]->getWidth()),
+  frameHeight(frames[0]->getHeight())
+{ }
+
 MultiSprite::MultiSprite(const MultiSprite& s) :
   Drawable(s), 
   frames(s.frames),

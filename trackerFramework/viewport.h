@@ -15,6 +15,8 @@ public:
   float Y() const { return position[1]; }
   void Y(float y) { position[1] = y; }
 
+  unsigned getWidth(){ return viewWidth; }
+  
   void setObjectToTrack(const Drawable *obj);
   const Drawable* getObjectToTrack() const { return objectToTrack; } 
 

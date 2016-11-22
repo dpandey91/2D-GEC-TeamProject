@@ -12,10 +12,10 @@
 class Drawable {
 public:
   Drawable(const bool aComeback, const std::string& n, const Vector2f& pos, const Vector2f& vel): 
-    bComeback(aComeback), name(n), position(pos), velocity(vel) {}
+    bComeback(aComeback), bExploded(false), name(n), position(pos), velocity(vel) {}
 
   Drawable(const Drawable& s) : 
-    bComeback(s.bComeback), name(s.name), position(s.position), velocity(s.velocity)
+    bComeback(s.bComeback), bExploded(s.bExploded), name(s.name), position(s.position), velocity(s.velocity)
     { }
 
   virtual ~Drawable() {}
@@ -43,12 +43,19 @@ public:
   const Vector2f& getPosition() const   { return position; }
   void setPosition(const Vector2f& pos) { position = pos;  }
 
-  virtual bool collidedWith(const Drawable*) const { 
+  virtual bool collidedWith(const Drawable*) {
     throw std::string("No collidedWith");  
   }
+  
+  virtual void explode(){
+    throw std::string("No explode");  
+  }
+  
+  bool isExploded() { return bExploded; }
 
 protected:
   bool bComeback;
+  bool bExploded;
   
 private:
   std::string name;

@@ -2,6 +2,8 @@
 #include "gamedata.h"
 #include "frameFactory.h"
 #include "health.h"
+#include "explodingSprite.h"
+#include "collisionStrategy.h"
 
 Player::Player( const std::string& name) :
   TwoWayMultiSprite(name),
@@ -11,7 +13,13 @@ Player::Player( const std::string& name) :
   keyPresseds(false),
   keyPressedd(false),
   keyPressedw(false),
-  yBound(Gamedata::getInstance().getXmlInt("boy/yBound"))
+  yBound(Gamedata::getInstance().getXmlInt("boy/yBound")),
+  bulletName("bullet"),
+  bulletSpeed(Gamedata::getInstance().getXmlInt(bulletName+"/bulletSpeed")),
+  bullets(bulletName),
+  isExploding(false),
+  explosion(NULL),
+  strategy(new PerPixelCollisionStrategy())
 {}
 
 Player::Player(const Player& s) :
@@ -22,12 +30,36 @@ Player::Player(const Player& s) :
   keyPresseds(s.keyPresseds),
   keyPressedd(s.keyPressedd),
   keyPressedw(s.keyPressedw),
-  yBound(s.yBound)
+  yBound(s.yBound),
+  bulletName(s.bulletName),
+  bulletSpeed(s.bulletSpeed),
+  bullets(s.bullets),
+  isExploding(s.isExploding),
+  explosion(NULL),
+  strategy(new PerPixelCollisionStrategy())
 {}
+
+Player::~Player(){
+    if(explosion){
+        delete explosion;
+        explosion = NULL;
+    }
+    
+    if(strategy){
+        delete strategy;
+        strategy = NULL;
+    }
+}
 
 void Player::resetPosition(){
    X(Gamedata::getInstance().getXmlInt(getName()+"/startLoc/x"));
-   Y(Gamedata::getInstance().getXmlInt(getName()+"/startLoc/y")); 
+   Y(Gamedata::getInstance().getXmlInt(getName()+"/startLoc/y"));
+   setVelocity(Vector2f(Gamedata::getInstance().getXmlInt(getName()+"/speedX"),
+                    Gamedata::getInstance().getXmlInt(getName()+"/speedY")));
+   bullets.reset();
+   isExploding = false;
+   explosion = NULL;
+   setState(WALK);
 } 
 
 void Player::setState(int state){
@@ -42,7 +74,7 @@ void Player::stop(){
   keyPressedw = false;
   keyPresseds = false;
   
-  if(Y()>worldHeight-frameHeight)
+  if(Y() > worldHeight-frameHeight)
       Y(worldHeight-frameHeight);  
   
   setState(IDLE);
@@ -73,7 +105,6 @@ void Player::moveDown(){
 }
 
 void Player::move(const float& incr){
-    
     if(keyPresseda){
         if( X() > 0){
             X(X() + velocityX()*incr); 
@@ -103,22 +134,46 @@ void Player::move(const float& incr){
     }        
 }
 
+void Player::draw() const{
+   
+  if(currState == EXPLODE && explosion && explosion->chunkCount() != 0){
+    explosion->draw();
+  }
+  else if(currState != VANISH){
+    TwoWayMultiSprite::draw();
+    bullets.draw();
+  }
+}
+
 void Player::update(Uint32 ticks) {
   
-  if(Health::getInstance().getHealth() > 0){
+  if(currState == EXPLODE && explosion){
+      explosion->update(ticks);
+      if(explosion->chunkCount() == 0){
+          delete explosion;
+          explosion = NULL;
+          currState = IDLE;
+          bExploded = false;
+      }
+      return;
+  }
+  else if(currState != VANISH){
+    bullets.update(ticks, getPosition());
+    if(Health::getInstance().getHealth() > 0){
       if(currState == WALK){
-      float incr =  static_cast<float>(ticks) * 0.0005;
-      move(incr);
-      advanceFrame(ticks);
-    }
-    else{
-      if(velocityX() >= 0){
-        currentFrame = 2;
+        float incr =  static_cast<float>(ticks) * 0.0005;
+        move(incr);
+        advanceFrame(ticks);
       }
       else{
-        currentFrame = 2+numberOfFrames/2;
+        if(velocityX() >= 0){
+          currentFrame = 2;
+        }
+        else{
+          currentFrame = 2+numberOfFrames/2;
+        }
       }
-    }
+    }    
   }
 }
 
@@ -128,6 +183,46 @@ void Player::increaseVelocity(float scale){
 
 void Player::decreaseVelocity(float scale){
     setVelocity(getVelocity()/scale);
+}
+
+void Player::shoot(){
+  if((currState == IDLE || currState == WALK) && (Health::getInstance().getHealth() > 0))
+  {
+    Vector2f vel = getVelocity();
+    float x;
+    float y = Y()+ frameHeight/2 + 30;
+    if(vel[0] >= 0) {
+      x = X() + frameWidth - 40;
+      vel[0] += bulletSpeed;
+    }
+    else {
+      x=X();
+      vel[0] -= bulletSpeed;
+    }
+    vel[1] *=0;
+  
+    bullets.shoot(Vector2f(x,y), vel);
+  }
+}
+
+void Player::explode(){
+    if(!explosion){
+        explosion = new ExplodingSprite(Sprite(getName(), getPosition(), getVelocity(), frames[currentFrame]));
+    }
+    currState = EXPLODE;
+    bExploded = true;
+}
+
+bool Player::collidedWithBullets(const Drawable* d) {
+  return bullets.collidedWith(d);
+}
+
+bool Player::collidedWith(const Drawable* d) {
+  bool bRet = false;
+  if(strategy){
+    bRet = strategy->execute(*this, *d);    
+  }
+  return bRet;
 }
 
 

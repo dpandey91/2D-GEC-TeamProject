@@ -3,14 +3,18 @@
 #include <string>
 #include <vector>
 #include "twoWayMultisprite.h"
+#include "bulletsPool.h"
 
+class CollisionStrategy;
+class ExplodingSprite;
 class Player : public TwoWayMultiSprite {
 public:
 
   Player(const std::string&);
   Player(const Player&);
-  virtual ~Player() { };
+  virtual ~Player();
 
+  virtual void draw() const;
   virtual void update(Uint32 ticks);
   void resetPosition();
   void setState(int state);
@@ -24,10 +28,18 @@ public:
   void increaseVelocity(float scale);
   void decreaseVelocity(float scale);
 
+  void shoot();
+  virtual void explode();
+    
+  bool collidedWithBullets(const Drawable* d);
+  bool collidedWith(const Drawable* d);
+    
 private:
   enum PLAYER_STATES{
       IDLE,
-      WALK
+      WALK,
+      EXPLODE,
+      VANISH
   };
   
   void move(const float& incr);
@@ -38,6 +50,16 @@ private:
   bool keyPressedd;
   bool keyPressedw;
   int yBound;
+  
+  //MultiBullet
+  std::string bulletName;
+  float bulletSpeed;
+  BulletsPool bullets;
+  bool isExploding;
+  ExplodingSprite* explosion;
+  CollisionStrategy* strategy;
+  
+  Player& operator=(const Player&);
 };
 
 #endif
