@@ -1,0 +1,42 @@
+Name:Dipika Pandey
+Clemson Email Address:dpandey@g.clemson.edu
+Course number: CPSC 6160
+
+Project no:5
+Project due date:11-22-2016
+
+Project description:
+As  described in the earlier milestone of the project,the game is based on the idea that a school boy lost his way to home and trying to find his home through the graveyard and encountered some ghosts. He has the magical pencil box(object pool) from which he takes out the pencils, rubber, ruler and other stuff to kill the ghosts(Collision Detection and Explosion).
+
+Dipika’s Effort:
+
+1) Implemented collision detection and thus exploding the sprite:
+When projectiles such as pencil, ruler, eraser or pencil box collides with the ghost, a midpoint collision detection technique is used and the ghosts are exploded. 
+The exploded ghosts are reused for again exploding i.e. the exploding sprite once created is not deleted after explosion but in destructor of sprite. This adds to the efficiency as multiple creation of exploding sprite is avoided. The ghosts enter the viewport after explodision.
+
+A collision is detected between ghosts and player using per pixel collision detecting technique. On collision the health of player is reduced and will reach to zero on colliding with ghosts. For boosting the energy of player, you can use booster key - k.
+
+
+Common Effort:
+
+1) Created object pooling for dynamic objects such as pencils, ruler, eraser to kill ghost and demonstrated the use of object pooling in the HUD. HUD toggles with F1 and shows information about how to move the player, how many objects are active and how many objects are pooled. The object pool size is controlled by the either by maximum distance for the projectiles or maximum number of bullets to be created specified in XML.
+
+
+Note to highlight:
+1) We create only a specified number for ghosts specified by xml which is set to 4 for this project. We reuse the same ghost object to reappear again when they go  out of viewport or are exploded. They are again move into the viewport from the direction in which player is moving and will move in opposite direction of player approaching player. Frames of each ghosts created are shallow copy rather than deep copy(for better performance).
+
+2) We have created our own ghost and the roadway sprite.
+
+3) Our project is completely datadriven and can be easily configured using the XML file.
+
+4) The painter's algorithm i.e. pumpkins in background and parallax scrolling create illusion of depth
+
+5) The projectiles sprites are used from:
+http://hostted.com/pencil-clip/
+http://www.clipartkid.com/pencil-no-background-cliparts/
+http://www.clipartpanda.com/categories/inch-ruler-clipart
+
+
+
+Problems with this project:None.
+

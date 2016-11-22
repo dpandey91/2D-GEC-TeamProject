@@ -98,7 +98,7 @@
   <height>260</height>
   <startLoc x="490" y="20"/>
   <color red="255" green="255" blue="0"/>
-  <time>10</time>
+  <time>5</time>
 </hudBar>
 
 <healthBar>
@@ -114,7 +114,7 @@
   <startLoc x="0" y="0"/>
   <endLoc x="3000" y="480"/>
   <cushion>50</cushion>
-  <noOfObjects actual="2" instances="6"/>
+  <noOfObjects actual="2" instances="9"/>
   <scale min="0.2" max="1.2"/>
   <width>32</width>
   <height>32</height>
@@ -135,11 +135,11 @@
   <yBound>70</yBound>
   <xAdd min="600" max="900"/>
   <yAdd min="30" max="100"/>
-  <noOfObjects>4</noOfObjects>
+  <noOfObjects>5</noOfObjects>
   <transparency>true</transparency>
   <chunk>
     <comeback>false</comeback>
-    <size>15</size>
+    <size>18</size>
     <distance>50</distance>
   </chunk>
 </ghost>
@@ -158,7 +158,7 @@
   <speedX>90</speedX>
   <speedY>0</speedY>
   <bulletSpeed>400</bulletSpeed>
-  <maxBullet>5</maxBullet>
+  <maxBullet>6</maxBullet>
   <distance>400</distance>
   <transparency>true</transparency>
   <chunk>
