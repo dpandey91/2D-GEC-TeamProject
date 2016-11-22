@@ -95,7 +95,7 @@
 
 <hudBar>
   <width>350</width>
-  <height>250</height>
+  <height>260</height>
   <startLoc x="490" y="20"/>
   <color red="255" green="255" blue="0"/>
   <time>10</time>

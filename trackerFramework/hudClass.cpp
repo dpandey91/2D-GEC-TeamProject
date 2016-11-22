@@ -33,11 +33,12 @@ void HudClass::drawHud(SDL_Surface* const screen, const IOManager& io, int secon
     io.printMessageAt("K -> BOOST  HEALTH    ", xPos+10, yPos+72);
     io.printMessageAt("Z -> Increase Speed",xPos+10, yPos+92);
     io.printMessageAt("X -> Decrease Speed",xPos+10, yPos+112); 
-    io.printMessageAt("F1-> For Help", xPos+10, yPos+138);
+    io.printMessageAt("F1-> For Help F4 -> to generate frames", xPos+10, yPos+138);
     io.printMessageValueAt("Seconds: ", seconds, xPos+10, yPos+160);
     io.printMessageValueAt("fps: ", fps, xPos+10, yPos+180);
-    io.printMessageValueAt("Bullet List: ", bCount, xPos+10, yPos+200);
-    io.printMessageValueAt("Free List: ", fCount, xPos+10, yPos+220);
+    io.printMessageAt("N -> shoot  R-> reset" , xPos+10, yPos+200);
+    io.printMessageValueAt("Bullet List: ", bCount, xPos+10, yPos+220);
+    io.printMessageValueAt("Free List: ", fCount, xPos+10, yPos+240);
     Draw_AALine(screen, xPos, yPos, xPos + hudWidth, yPos, color);
     Draw_AALine(screen, xPos, yPos+hudHeight, xPos + hudWidth, yPos+hudHeight, color);
 }
