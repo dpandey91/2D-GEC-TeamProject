@@ -2,13 +2,13 @@
 #define MULTIBULLET_H
 
 #include <string>
-#include "multisprite.h"
+#include "twoWayMultisprite.h"
+#include "collisionStrategy.h"
 
-class CollisionStrategy;
-class MultiBullet: public MultiSprite {
+class MultiBullet: public TwoWayMultiSprite {
     
 public:
-  MultiBullet(const std::string&, const Vector2f&, const Vector2f&);
+  MultiBullet(const std::string, const Vector2f&, const Vector2f&);
   MultiBullet(const MultiBullet&);
   virtual ~MultiBullet();
   
@@ -18,12 +18,14 @@ public:
   void reset();
   bool isTooFar() const {return tooFar;}
   void setStrategy(CollisionStrategy* aStrategy);
+  void increaseFrame(int cFrame = -1);
   
 private:
   float maxDistance;
   bool tooFar;
-  CollisionStrategy* strategy;
-    
+  MidPointCollisionStrategy strategy;
+
+  virtual void advanceFrame(Uint32 ticks);  
   MultiBullet& operator=(const MultiBullet&);
 };
 

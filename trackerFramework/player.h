@@ -4,8 +4,8 @@
 #include <vector>
 #include "twoWayMultisprite.h"
 #include "bulletsPool.h"
+#include "collisionStrategy.h"
 
-class CollisionStrategy;
 class ExplodingSprite;
 class Player : public TwoWayMultiSprite {
 public:
@@ -33,6 +33,9 @@ public:
     
   bool collidedWithBullets(const Drawable* d);
   bool collidedWith(const Drawable* d);
+  
+  unsigned int getBulletCount() const {return bullets.getBulletlistCount();}
+  unsigned int getFreeCount() const {return bullets.getFreelistCount();}
     
 private:
   enum PLAYER_STATES{
@@ -57,7 +60,7 @@ private:
   BulletsPool bullets;
   bool isExploding;
   ExplodingSprite* explosion;
-  CollisionStrategy* strategy;
+  PerPixelCollisionStrategy strategy;
   
   Player& operator=(const Player&);
 };

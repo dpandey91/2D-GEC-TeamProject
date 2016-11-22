@@ -125,6 +125,7 @@ void Clock::start() {
   started = true; 
   paused = false; 
   frames = 0;
+  prevTicks = 0;
   timeAtPause = timeAtStart = SDL_GetTicks(); 
 }
 void Clock::pause() {

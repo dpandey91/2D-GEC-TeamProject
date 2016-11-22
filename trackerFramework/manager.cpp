@@ -11,7 +11,6 @@
 #include "manager.h"
 #include "player.h"
 #include "scaledSprite.h"
-#include "ghost.h"
 
 class ScaledSpriteCompare {
 public:
@@ -43,6 +42,7 @@ Manager::~Manager() {
 Manager::Manager() :
   env( SDL_putenv(const_cast<char*>("SDL_VIDEO_CENTERED=center")) ),
   io( IOManager::getInstance() ),
+  ghostMgr(),
   clock( Clock::getInstance() ),
   screen( io.getScreen() ),
   world("layer1", Gamedata::getInstance().getXmlInt("layer1/factor") ),
@@ -76,28 +76,8 @@ Manager::Manager() :
   atexit(SDL_Quit);
   
   makePumpkins();
-  makeGhosts("ghost");
+  ghostMgr.makeGhosts();
   viewport.setObjectToTrack(player);
-}
-
-void Manager::makeGhosts(const std::string& name){
-  
-  //Creating ghosts
-  int noOfGhosts = Gamedata::getInstance().getXmlInt(name+"/noOfObjects");
-  Sprite* ghostSprite = NULL;
-  Vector2f velocity(Gamedata::getInstance().getXmlFloat(name+"/speed/x"), Gamedata::getInstance().getXmlFloat(name+"/speed/y"));
-  for(int i =0; i < noOfGhosts; i++){
-  
-    Vector2f position(Gamedata::getInstance().getRandFloat(Gamedata::getInstance().getXmlInt(name+"/startLoc/x"), Gamedata::getInstance().getXmlInt(name+      "/endLoc/x")), Gamedata::getInstance().getRandFloat(Gamedata::getInstance().getXmlInt(name+"/startLoc/y"), Gamedata::getInstance().getXmlInt(name+"/endLoc/y")));
-                  
-    if(!ghostSprite){
-        ghostSprite = new Ghost(name, position, velocity);
-        sprites.push_back(ghostSprite);
-    }
-    else{
-        sprites.push_back(new Ghost(ghostSprite->getName(), position, velocity, ghostSprite->getFrame()));   
-    }
-  }
 }
 
 float Manager::getScaleFromRange(float start, float end, float pointNumber)
@@ -181,20 +161,25 @@ void Manager::draw() const {
   layer4.draw();
   drawLayers(iter);
   
-  std::vector<Drawable*>::const_iterator ptr = sprites.begin();
+  /*std::vector<Drawable*>::const_iterator ptr = sprites.begin();
   while(ptr != sprites.end() && (*ptr)->Y() + (*ptr)->getFrame()->getHeight() < player->Y() + (*ptr)->getFrame()->getHeight()) {
     (*ptr)->draw();
     ptr++;
-  }
-  player->draw();
+  }*/
   
-  while(ptr != sprites.end()) {
+  player->draw();
+  ghostMgr.draw();
+  
+  /*while(ptr != sprites.end()) {
     (*ptr)->draw();
     ptr++;
-  }
+  }*/
+  
+  //draw ghost manager
+  
   
   if(clock.getSeconds() < hudTime || showHud){
-    hudBar.drawHud(screen, io, clock.getSeconds(), clock.getAvgFrameRate());
+    hudBar.drawHud(screen, io, clock.getSeconds(), clock.getAvgFrameRate(), player->getBulletCount(), player->getFreeCount());
   }  
 
   healthBar.draw();  
@@ -232,10 +217,8 @@ void Manager::update() {
     pumpkin[i]->update(ticks);
   }
 
-  checkForCollisions();
-  for (unsigned int i = 0; i < sprites.size(); ++i) {
-    sprites[i]->update(ticks);
-  }
+  ghostMgr.checkForCollisions(player);
+  ghostMgr.update(ticks);
   
   if ( makeVideo && frameCount < frameMax ) {
     makeFrame();
@@ -290,13 +273,9 @@ void Manager::play() {
         }
         
         if (keystate[SDLK_r] && !keyCatch) {
-          player->resetPosition();
-          std::vector<Drawable*>::iterator iter = sprites.begin();
-          while ( iter != sprites.end() ) {
-              (dynamic_cast<Ghost*>(*iter))->resetPosition();
-              ++iter;
-          }
           clock.start();
+          player->resetPosition();
+          ghostMgr.reset();
           healthBar.reset();
           keyCatch = true;
         }
@@ -354,20 +333,4 @@ void Manager::play() {
   }
 }
 
-void Manager::checkForCollisions() {
-  std::vector<Drawable*>::iterator iter = sprites.begin();
-  while ( iter != sprites.end() ) {
-    if((*iter)->isExploded() || (*iter)->X() < viewport.X() || (*iter)->X() > viewport.X() + viewport.getWidth()) {
-        ++iter;
-    }
-    else if ( player->collidedWithBullets(*iter) ){
-        (*iter)->explode();
-        ++iter;
-    }
-    else if(player->collidedWith(*iter)){
-        healthBar.update();
-        break;
-    }
-    else ++iter;
-  }
-}
+

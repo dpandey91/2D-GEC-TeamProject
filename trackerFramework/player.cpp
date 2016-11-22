@@ -3,7 +3,6 @@
 #include "frameFactory.h"
 #include "health.h"
 #include "explodingSprite.h"
-#include "collisionStrategy.h"
 
 Player::Player( const std::string& name) :
   TwoWayMultiSprite(name),
@@ -19,7 +18,7 @@ Player::Player( const std::string& name) :
   bullets(bulletName),
   isExploding(false),
   explosion(NULL),
-  strategy(new PerPixelCollisionStrategy())
+  strategy()
 {}
 
 Player::Player(const Player& s) :
@@ -36,18 +35,13 @@ Player::Player(const Player& s) :
   bullets(s.bullets),
   isExploding(s.isExploding),
   explosion(NULL),
-  strategy(new PerPixelCollisionStrategy())
+  strategy(s.strategy)
 {}
 
 Player::~Player(){
     if(explosion){
         delete explosion;
         explosion = NULL;
-    }
-    
-    if(strategy){
-        delete strategy;
-        strategy = NULL;
     }
 }
 
@@ -190,8 +184,8 @@ void Player::shoot(){
   {
     Vector2f vel = getVelocity();
     float x;
-    float y = Y()+ frameHeight/2 + 30;
-    if(vel[0] >= 0) {
+    float y = Y()+ frameHeight/2;
+    if(currentFrame < numberOfFrames/2) {        
       x = X() + frameWidth - 40;
       vel[0] += bulletSpeed;
     }
@@ -219,8 +213,15 @@ bool Player::collidedWithBullets(const Drawable* d) {
 
 bool Player::collidedWith(const Drawable* d) {
   bool bRet = false;
-  if(strategy){
-    bRet = strategy->execute(*this, *d);    
+  bRet = strategy.execute(*this, *d);
+  if(bRet){
+    if(!isExploding){
+      Health::getInstance().update();
+      isExploding = true;    
+    }
+  }
+  else{
+    isExploding = false;
   }
   return bRet;
 }

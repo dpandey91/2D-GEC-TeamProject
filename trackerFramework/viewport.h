@@ -16,9 +16,12 @@ public:
   void Y(float y) { position[1] = y; }
 
   unsigned getWidth(){ return viewWidth; }
+  unsigned getHeight(){ return viewHeight; }
   
   void setObjectToTrack(const Drawable *obj);
-  const Drawable* getObjectToTrack() const { return objectToTrack; } 
+  const Drawable* getObjectToTrack() const { return objectToTrack; }
+  Vector2f getObjectPosition();
+  Vector2f getObjectVelocity();
 
 private:
   const Gamedata& gdata;

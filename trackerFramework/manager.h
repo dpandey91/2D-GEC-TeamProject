@@ -6,6 +6,7 @@
 #include "viewport.h"
 #include "hudClass.h"
 #include "health.h"
+#include "ghostManager.h"
 
 class Player;
 class ScaledSprite;
@@ -20,6 +21,7 @@ public:
 private:
   const bool env;
   const IOManager& io;
+  GhostManager ghostMgr;
   Clock clock;
 
   SDL_Surface * const screen;
@@ -56,8 +58,6 @@ private:
   void update();
 
   void makePumpkins();
-  void makeGhosts(const std::string& name);
-  void checkForCollisions();
   void drawLayers(unsigned int& iter) const;
   float getScaleFromRange(float start, float end, float pointNumber);
   Vector2f getScaledVelocity(Vector2f vel, float cushion);

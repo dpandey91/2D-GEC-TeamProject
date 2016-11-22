@@ -92,7 +92,7 @@ MultiSprite::MultiSprite(const MultiSprite& s) :
   timeSinceLastFrame( s.timeSinceLastFrame ),
   frameWidth( s.frameWidth ),
   frameHeight( s.frameHeight )
-  { }
+{ }
 
 void MultiSprite::draw() const { 
   Uint32 x = static_cast<Uint32>(X());

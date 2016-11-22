@@ -1,28 +1,32 @@
 #include "bulletsPool.h"
+#include "gamedata.h"
 
 BulletsPool::BulletsPool(const std::string & str) :
   name(str),
+  maxBullet(Gamedata::getInstance().getXmlInt(str+"/maxBullet")),
   bulletList(),
   freeList()
 {}
 
 BulletsPool::BulletsPool(const BulletsPool& b) :
   name(b.name),
+  maxBullet(b.maxBullet),
   bulletList(b.bulletList),
   freeList(b.freeList)
 {}
 
 void BulletsPool::shoot(const Vector2f& pos, const Vector2f& vel){
-  if(freeList.empty()) {
+  if(freeList.empty() && bulletList.size() < 4) {
     MultiBullet b(name, pos, vel);
     bulletList.push_back(b);
   }
-  else{
+  else if(!freeList.empty()){
     MultiBullet b = freeList.front();
     freeList.pop_front();
     b.reset();
     b.setVelocity(vel);
     b.setPosition(pos);
+    b.increaseFrame();
     bulletList.push_back(b);
   }
 }

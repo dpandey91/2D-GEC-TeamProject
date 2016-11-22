@@ -74,7 +74,9 @@ Ghost::~Ghost() {
 
 void Ghost::resetPosition(){
    
-  Vector2f position(Gamedata::getInstance().getRandFloat(Gamedata::getInstance().getXmlInt(getName()+"/startLoc/x"), Gamedata::getInstance().getXmlInt(getName()+      "/endLoc/x")), Gamedata::getInstance().getRandFloat(Gamedata::getInstance().getXmlInt(getName()+"/startLoc/y"), Gamedata::getInstance().getXmlInt(getName()+"/endLoc/y")));setPosition(position);
+  Vector2f position(Gamedata::getInstance().getRandFloat(Gamedata::getInstance().getXmlInt(getName()+"/startLoc/x"), Gamedata::getInstance().getXmlInt(getName()+"/endLoc/x")), Gamedata::getInstance().getRandFloat(Gamedata::getInstance().getXmlInt(getName()+"/startLoc/y"), Gamedata::getInstance().getXmlInt(getName()+"/endLoc/y")));
+  setPosition(position);
+  
   bExploded = false;
   currState = WALK;
 }

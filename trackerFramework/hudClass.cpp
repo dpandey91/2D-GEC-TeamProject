@@ -23,7 +23,7 @@ HudClass::HudClass():
 HudClass::~HudClass()
 {}
 
-void HudClass::drawHud(SDL_Surface* const screen, const IOManager& io, int seconds, int fps) const{
+void HudClass::drawHud(SDL_Surface* const screen, const IOManager& io, int seconds, int fps, unsigned int bCount, unsigned int fCount) const{
 
     const Uint32 color = SDL_MapRGB(screen->format, rgbVal.red, rgbVal.blue, rgbVal.green);
     Draw_AALine(screen, xPos, yPos+hudHeight/2, xPos+hudWidth, yPos+hudHeight/2, hudHeight, 0, 0, 0, 0xff/2);
@@ -36,8 +36,8 @@ void HudClass::drawHud(SDL_Surface* const screen, const IOManager& io, int secon
     io.printMessageAt("F1-> For Help", xPos+10, yPos+138);
     io.printMessageValueAt("Seconds: ", seconds, xPos+10, yPos+160);
     io.printMessageValueAt("fps: ", fps, xPos+10, yPos+180);
+    io.printMessageValueAt("Bullet List: ", bCount, xPos+10, yPos+200);
+    io.printMessageValueAt("Free List: ", fCount, xPos+10, yPos+220);
     Draw_AALine(screen, xPos, yPos, xPos + hudWidth, yPos, color);
-    //Draw_AALine(screen, xPos, yPos, xPos, yPos+hudHeight, color);
-    //Draw_AALine(screen, xPos + hudWidth, yPos, xPos + hudWidth, yPos+hudHeight, color);
     Draw_AALine(screen, xPos, yPos+hudHeight, xPos + hudWidth, yPos+hudHeight, color);
 }

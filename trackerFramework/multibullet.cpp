@@ -4,33 +4,25 @@
 #include "gamedata.h"
 #include "collisionStrategy.h"
 
-MultiBullet::MultiBullet(const std::string& name, const Vector2f& pos, const Vector2f& vel):
-  MultiSprite(name, pos, vel),
+MultiBullet::MultiBullet(const std::string name, const Vector2f& pos, const Vector2f& vel):
+  TwoWayMultiSprite(name, pos, vel),
   maxDistance(Gamedata::getInstance().getXmlInt(name+"/distance")),
   tooFar(false),
-  strategy(new MidPointCollisionStrategy())
+  strategy()
 { }
 
 MultiBullet::MultiBullet(const MultiBullet& mb):
-  MultiSprite(mb),
+  TwoWayMultiSprite(mb),
   maxDistance(mb.maxDistance),
   tooFar(mb.tooFar),
-  strategy(new MidPointCollisionStrategy())
-{ }
+  strategy(mb.strategy)
+{}
 
-MultiBullet::~MultiBullet(){
-  if(strategy){
-    delete strategy;
-    strategy = NULL;
-  }
-}
+MultiBullet::~MultiBullet()
+{}
  
 void MultiBullet::reset(){
   tooFar = false;
-}
-
-void MultiBullet::setStrategy(CollisionStrategy* aStrategy){
-    strategy = aStrategy;
 }
 
 void MultiBullet::update(Uint32 ticks, const Vector2f& pPos) {
@@ -43,9 +35,22 @@ void MultiBullet::update(Uint32 ticks, const Vector2f& pPos) {
 }
 
 bool MultiBullet::collidedWith(const Drawable* d) {
-  bool bRet = false;
-  if(strategy){
-    bRet = strategy->execute(*this, *d);
+  return strategy.execute(*this, *d);
+}
+
+void MultiBullet::advanceFrame(Uint32 ticks) {
+}
+
+void MultiBullet::increaseFrame(int cFrame){
+  if(velocityX() >= 0){
+    currentFrame = (currentFrame+1) % (numberOfFrames/2);
   }
-  return bRet;
+  else {
+    if(currentFrame > numberOfFrames/2){
+      currentFrame =  (currentFrame+1) % numberOfFrames;
+    }
+    if(currentFrame < numberOfFrames/2){
+      currentFrame = (currentFrame + (numberOfFrames/2) + 1) % numberOfFrames;
+    }
+  }
 }

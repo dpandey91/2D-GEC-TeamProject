@@ -43,3 +43,11 @@ void Viewport::update() {
     position[1] = worldHeight-viewHeight;
   }
 }
+
+Vector2f Viewport::getObjectPosition(){
+    return objectToTrack->getPosition();
+}
+
+Vector2f Viewport::getObjectVelocity(){
+    return objectToTrack->getVelocity();
+}

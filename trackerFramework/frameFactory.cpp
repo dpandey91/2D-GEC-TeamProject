@@ -61,7 +61,7 @@ Frame* FrameFactory::getScaledFrame(const std::string& name, float scale, int it
   snprintf(intStr, sizeof(intStr), "%d", iter);
   string str(intStr);  
   
-  std::string key = name+str;  
+  std::string key = name+str;
   std::map<std::string, Frame*>::const_iterator pos = frames.find(key); 
   if ( pos == frames.end() ) {
     SDL_Surface * const surface =

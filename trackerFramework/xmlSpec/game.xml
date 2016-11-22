@@ -80,10 +80,10 @@
   <startLoc x="54" y="200"/>
   <xframes>1</xframes>
   <yframes>9</yframes>
-  <yBound>150</yBound>
+  <yBound>120</yBound>
   <frameInterval>50</frameInterval>
   <speedX>350</speedX>
-  <speedY>200</speedY>
+  <speedY>250</speedY>
   <comeback>true</comeback>
   <transparency>false</transparency>
   <chunk>
@@ -95,7 +95,7 @@
 
 <hudBar>
   <width>350</width>
-  <height>200</height>
+  <height>250</height>
   <startLoc x="490" y="20"/>
   <color red="255" green="255" blue="0"/>
   <time>10</time>
@@ -127,15 +127,15 @@
 
 <ghost>
   <file>images/ghost.png</file>
-  <startLoc x="404" y="150"/>
-  <endLoc x="800" y="380"/>
+  <startLoc x="304" y="150"/>
+  <endLoc x="1050" y="400"/>
   <frameInterval>20</frameInterval>
-  <speed x="-40" y="0"/>
+  <speed x="-100" y="-10"/>
   <comeback>true</comeback>
-  <yBound>50</yBound>
+  <yBound>70</yBound>
   <xAdd min="300" max="600"/>
   <yAdd min="5" max="10"/>
-  <noOfObjects>3</noOfObjects>
+  <noOfObjects>6</noOfObjects>
   <transparency>true</transparency>
   <chunk>
     <comeback>false</comeback>
@@ -145,18 +145,20 @@
 </ghost>
 
 <bullet>
-  <file>images/b.bmp</file>
+  <filePositive>images/bulletleft.png</filePositive>
+  <fileNegative>images/bulletright.png</fileNegative>
   <comeback>false</comeback>
   <totalInstance>5</totalInstance>
   <startLoc x="50" y="470"/>
   <xframes>1</xframes>
-  <yframes>1</yframes>
+  <yframes>4</yframes>
   <frameInterval>20</frameInterval>
   <width>44</width>
   <height>11</height>
   <speedX>90</speedX>
   <speedY>0</speedY>
   <bulletSpeed>400</bulletSpeed>
+  <maxBullet>5</maxBullet>
   <distance>400</distance>
   <transparency>true</transparency>
   <chunk>

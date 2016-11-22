@@ -24,6 +24,7 @@ public:
   void reset();
 private:
   std::string name;
+  int maxBullet;
    
   std::list<MultiBullet> bulletList;
   std::list<MultiBullet> freeList;
