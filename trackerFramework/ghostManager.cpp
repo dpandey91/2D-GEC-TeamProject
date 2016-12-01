@@ -88,23 +88,27 @@ Vector2f GhostManager::getScaledPosition(Vector2f position, float cushion)
   return temp;
 }
 
-void GhostManager::checkForCollisions(Player* player) {
+bool GhostManager::checkForCollisions(Player* player) {
   std::list<Ghost*>::iterator iter = dumbGhosts.begin();
+  bool bExplode = false;
   while ( iter != dumbGhosts.end() ) {
     if((*iter)->isObjExploded() || (*iter)->X() < viewport.X() || (*iter)->X() > viewport.X() + viewport.getWidth()) {
         ++iter;
     }
     else if (player->collidedWithBullets(*iter)){
         (*iter)->explode();
+        bExplode = true;
         ++iter;
     }
     else if(player->collidedWith(*iter)){
+        
         //if(!player->isObjExploded())
         //    player->explode();
         break;
     }
     else ++iter;
   }
+  return bExplode;
 }
 
 void GhostManager::reset(){

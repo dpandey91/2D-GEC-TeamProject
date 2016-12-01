@@ -67,6 +67,7 @@ Manager::Manager() :
   playerMoveCount(Gamedata::getInstance().getXmlInt("healthBar/moveCount")),
   moveTick(0),
   player(new Player("boy")),
+  sound(),
   pumpkin()
 {
   if (SDL_Init(SDL_INIT_VIDEO) != 0) {
@@ -224,7 +225,10 @@ void Manager::update() {
     player->stop();
   }
   player->update(ticks);
-  ghostMgr.checkForCollisions(player);
+  bool pExplode = ghostMgr.checkForCollisions(player);
+  if(pExplode){
+      sound("Explosion", 2);
+  }
   ghostMgr.update(ticks);
   
   world.update();
@@ -239,7 +243,7 @@ void Manager::play() {
   SDL_Event event;
   bool done = false;
   bool keyCatch = false;
-  
+    
   while ( not done ) {
     while ( SDL_PollEvent(&event) ) {
       Uint8 *keystate = SDL_GetKeyState(NULL);
@@ -323,6 +327,7 @@ void Manager::play() {
        
         if (keystate[SDLK_n] ) {
           player->shoot();
+          sound("Gun", 1);
         }
       }
     }

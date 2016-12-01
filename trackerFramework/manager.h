@@ -7,6 +7,7 @@
 #include "hudClass.h"
 #include "health.h"
 #include "ghostManager.h"
+#include "sound.h"
 
 class Player;
 class ScaledSprite;
@@ -51,6 +52,7 @@ private:
   unsigned int moveTick;
   
   Player* player;
+  SDLSound sound;
   
   std::vector<ScaledSprite*> pumpkin;
 

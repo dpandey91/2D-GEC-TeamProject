@@ -18,7 +18,7 @@ public:
   void makeGhosts();
   void draw() const;
   void update(unsigned int ticks);
-  void checkForCollisions(Player* player);
+  bool checkForCollisions(Player* player);
   void reset();
   
 private:
