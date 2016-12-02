@@ -12,6 +12,9 @@
 #include "player.h"
 #include "scaledSprite.h"
 
+bool bWin = false;
+bool bLose =false;
+
 class ScaledSpriteCompare {
 public:
   bool operator()(const ScaledSprite* lhs, const ScaledSprite* rhs) {
@@ -68,6 +71,7 @@ Manager::Manager() :
   player(new Player("boy")),
   ghostMgr(*player),
   sound(),
+  showPoolHud(false),
   pumpkin()
 {
   if (SDL_Init(SDL_INIT_VIDEO) != 0) {
@@ -162,30 +166,34 @@ void Manager::draw() const {
   layer4.draw();
   drawLayers(iter);
   
-  /*std::vector<Drawable*>::const_iterator ptr = sprites.begin();
-  while(ptr != sprites.end() && (*ptr)->Y() + (*ptr)->getFrame()->getHeight() < player->Y() + (*ptr)->getFrame()->getHeight()) {
-    (*ptr)->draw();
-    ptr++;
-  }*/
-  
   player->draw();
   ghostMgr.draw();
   
-  /*while(ptr != sprites.end()) {
-    (*ptr)->draw();
-    ptr++;
-  }*/
-  
   //draw ghost manager
-  
-  
+   
   if(clock.getSeconds() < hudTime || showHud){
-    hudBar.drawHud(screen, io, clock.getSeconds(), clock.getAvgFrameRate(), player->getBulletCount(), player->getFreeCount());
-  }  
+    hudBar.drawHud(screen, io, clock.getSeconds(), clock.getAvgFrameRate());
+  }
+
+  if(player->getState() == player->WON){
+      hudBar.drawWin(screen, io, player->getScore());
+  }
+  else if(player->getState() == player->LOSE){
+      hudBar.drawLose(screen, io);
+  }
+  
+  if(showPoolHud){
+      hudBar.drawPoolHud(screen, io, player->getBulletCount(), player->getFreeCount());
+  }
 
   healthBar.draw();  
   io.printMessageAt(title, 10, 440);
+  if(player->getGodMode())
+    io.printMessageCenteredAt("God mode is on!", 50);
+
   viewport.draw();
+  
+  io.printMessageValueAt("Player  Score:  ", player->getScore(), 30, 50);
  
   SDL_Flip(screen);
 }
@@ -231,6 +239,10 @@ void Manager::update() {
       //sound("Explosion", 2);
   }
   ghostMgr.update(ticks);
+  
+  if(player->getState() == player->WON || player->getState() == player->LOSE){
+      clock.pause();
+  }
   
   world.update();
   layer2.update();
@@ -331,8 +343,13 @@ void Manager::play() {
           sound("Gun", 1);
         }
         
-        if (keystate[SDLK_m] ) {
-          ghostMgr.shoot();
+        if (keystate[SDLK_F2] && !keyCatch) {
+          keyCatch = true;
+          showPoolHud = !showPoolHud;
+        }
+        
+        if (keystate[SDLK_g] ) {
+          player->toggleGodMode();
         }
       }
     }

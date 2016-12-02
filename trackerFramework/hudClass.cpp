@@ -23,7 +23,7 @@ HudClass::HudClass():
 HudClass::~HudClass()
 {}
 
-void HudClass::drawHud(SDL_Surface* const screen, const IOManager& io, int seconds, int fps, unsigned int bCount, unsigned int fCount) const{
+void HudClass::drawHud(SDL_Surface* const screen, const IOManager& io, int seconds, int fps) const{
 
     const Uint32 color = SDL_MapRGB(screen->format, rgbVal.red, rgbVal.blue, rgbVal.green);
     Draw_AALine(screen, xPos, yPos+hudHeight/2, xPos+hudWidth, yPos+hudHeight/2, hudHeight, 0, 0, 0, 0xff/2);
@@ -37,8 +37,55 @@ void HudClass::drawHud(SDL_Surface* const screen, const IOManager& io, int secon
     io.printMessageValueAt("Seconds: ", seconds, xPos+10, yPos+160);
     io.printMessageValueAt("fps: ", fps, xPos+10, yPos+180);
     io.printMessageAt("N -> shoot  R-> reset" , xPos+10, yPos+200);
-    io.printMessageValueAt("Bullet List: ", bCount, xPos+10, yPos+220);
-    io.printMessageValueAt("Free List: ", fCount, xPos+10, yPos+240);
+    io.printMessageAt("G -> God Mode ", xPos+10, yPos+220);
+    io.printMessageAt("F2 -> Object Pool", xPos+10, yPos+240);
     Draw_AALine(screen, xPos, yPos, xPos + hudWidth, yPos, color);
     Draw_AALine(screen, xPos, yPos+hudHeight, xPos + hudWidth, yPos+hudHeight, color);
+}
+
+void HudClass::drawLose(SDL_Surface* const& screen, const IOManager& io ) const{
+    
+    const int HUD_W = 300;
+    const int HUD_H = 100;
+    int x = 300;
+    int y = 200;
+    const Uint32 color = SDL_MapRGB(screen->format, rgbVal.red, rgbVal.blue, rgbVal.green);
+    Draw_AALine(screen, x, y+HUD_H/2, x+HUD_W, y+HUD_H/2, HUD_H, 0, 0, 0, 0xff/2);
+    io.printMessageAt("Game Over", x+5, y+5);
+    io.printMessageAt("You were attacked by ghost!", x+5, y+30);
+    Draw_AALine(screen, x,y,x+HUD_W,y, color);
+    Draw_AALine(screen, x,y+HUD_H,x+HUD_W,y+HUD_H, color);
+    Draw_AALine(screen, x+HUD_W,y,x+HUD_W,y+HUD_H, color);
+    Draw_AALine(screen, x,y,x,y+HUD_H, color);
+}
+
+void HudClass::drawWin(SDL_Surface* const& screen, const IOManager& io, int score ) const{
+    
+    const int HUD_W = 300;
+    const int HUD_H = 100;
+    int x = 300;
+    int y = 200;
+    const Uint32 color = SDL_MapRGB(screen->format, rgbVal.red, rgbVal.blue, rgbVal.green);
+    Draw_AALine(screen, x, y+HUD_H/2, x+HUD_W, y+HUD_H/2, HUD_H, 0, 0, 0, 0xff/2);
+    io.printMessageAt("You Won!", x+5, y+5);
+    io.printMessageValueAt("Your score is !", score, x+5, y+30);
+    io.printMessageAt("You reached home successfully!", x+5, y+60);
+    Draw_AALine(screen, x,y,x+HUD_W,y, color);
+    Draw_AALine(screen, x,y+HUD_H,x+HUD_W,y+HUD_H, color);
+    Draw_AALine(screen, x+HUD_W,y,x+HUD_W,y+HUD_H, color);
+    Draw_AALine(screen, x,y,x,y+HUD_H, color);
+}
+
+void HudClass::drawPoolHud(SDL_Surface* const screen, const IOManager& io, unsigned int bCount, unsigned int fCount) const{
+    const int HUD_W = 120;
+    const int HUD_H = 70;
+    int x = 30;
+    int y = 70;
+    const Uint32 color = SDL_MapRGB(screen->format, rgbVal.red, rgbVal.blue, rgbVal.green);
+    Draw_AALine(screen, x, y+HUD_H/2, x+HUD_W, y+HUD_H/2, HUD_H, 0, 0, 0, 0xff/2);
+    io.printMessageValueAt("Bullet List: ", bCount, x+10, y+20);
+    io.printMessageValueAt("Free List: ", fCount, x+10, y+40);
+    
+    Draw_AALine(screen, x,y,x+HUD_W,y, color);
+    Draw_AALine(screen, x,y+HUD_H,x+HUD_W,y+HUD_H, color);
 }

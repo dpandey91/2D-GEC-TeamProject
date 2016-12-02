@@ -109,6 +109,7 @@ void Ghost::update(Uint32 ticks) {
   if(bComeback){
     if ( Y() < yBound) {
         velocityY( abs( velocityY() ) );
+        Y(yBound);
     }
     
     if ( Y() > worldHeight-frameHeight) {

@@ -17,7 +17,8 @@ SmartSprite::SmartSprite(const Ghost& ghost, Player& p) :
  bullets(bulletName),
  safeDistance(Gamedata::getInstance().getXmlInt(bulletName+"/safeDistance")),
  bulletInterval(Gamedata::getInstance().getXmlInt(bulletName+"/bulletInterval")),
- timeSinceLastBullet(0)
+ timeSinceLastBullet(0),
+ isDumb(false) 
 { }
 
 void SmartSprite::goLeft()  { 
@@ -29,7 +30,8 @@ void SmartSprite::goDown()  { velocityY( fabs(velocityY()) ); }
 
 void SmartSprite::draw() const {
   Ghost::draw();
-  bullets.draw();
+  if(!isDumb)
+    bullets.draw();
 }
 
 void SmartSprite::update(Uint32 ticks) {
@@ -38,34 +40,34 @@ void SmartSprite::update(Uint32 ticks) {
   Vector2f ghostPos = player.getPosition();
   
   bool bShoot = true;
-  if(abs(ghostPos[0] - playerPos[0]) < 200 && (abs(ghostPos[1] - playerPos[1]) || abs(ghostPos[1] - (playerPos[1] + player.getFrame()->getHeight())) < 30)){
+  if(abs(ghostPos[0] - playerPos[0]) < 50 && (abs(ghostPos[1] - playerPos[1]) || abs(ghostPos[1] - (playerPos[1] + player.getFrame()->getHeight())) < 30)){
      bShoot = true;
   }
   
-  if  ( currentMode == NORMAL ) {
-    if(bShoot) {currentMode = SHOOT;}
+  if(bShoot) {
+      currentMode = SHOOT;
   }
-  else if  ( currentMode == SHOOT ) {
-    if(!bShoot) currentMode = NORMAL;
+  else {
+      currentMode = NORMAL;
   }
   
   Ghost::update(ticks);
   bullets.update(ticks, getPosition());
   
-  if(currentMode == SHOOT && (timeSinceLastBullet > bulletInterval) && !static_cast<Drawable*>(&player)->isObjExploded()){
+  if(currentMode == SHOOT && (timeSinceLastBullet > bulletInterval) && !isDumb){
        shoot();
-       //manageEnemy();
-  }  
+       currentMode = NORMAL;
+  }
   
   timeSinceLastBullet +=ticks;
 }
 
 void SmartSprite::shoot(){
     Vector2f vel = getVelocity();
-    Vector2f pos = getPosition();
+    
     float x;
     float y = Y()+ frameHeight/2 - 20;
-    //std::cout << "Vel: " << vel[0] << std::endl;
+    
     if(X() < player.X()) {     
       x = X() + frameWidth - 40;
       vel[0] += bulletSpeed;

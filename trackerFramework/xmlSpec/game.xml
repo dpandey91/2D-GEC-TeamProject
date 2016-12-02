@@ -80,10 +80,10 @@
   <startLoc x="54" y="200"/>
   <xframes>1</xframes>
   <yframes>9</yframes>
-  <yBound>150</yBound>
+  <yBound>180</yBound>
   <frameInterval>50</frameInterval>
   <speedX>350</speedX>
-  <speedY>250</speedY>
+  <speedY>350</speedY>
   <comeback>true</comeback>
   <transparency>false</transparency>
   <chunk>
@@ -98,13 +98,13 @@
   <height>260</height>
   <startLoc x="490" y="20"/>
   <color red="255" green="255" blue="0"/>
-  <time>5</time>
+  <time>3</time>
 </hudBar>
 
 <healthBar>
   <startLoc x="20" y="100"/>
   <length>200</length>
-  <increment>1</increment>
+  <increment>30</increment>
   <thick>14</thick>
   <moveCount>50</moveCount>
 </healthBar>
@@ -128,13 +128,13 @@
 <ghost>
   <file>images/ghost.png</file>
   <startLoc x="404" y="150"/>
-  <endLoc x="1000" y="400"/>
+  <endLoc x="1000" y="480"/>
   <frameInterval>100</frameInterval>
   <speed x="-60" y="-10"/>
   <comeback>true</comeback>
   <xframes>1</xframes>
   <yframes>3</yframes>
-  <yBound>180</yBound>
+  <yBound>200</yBound>
   <xAdd min="600" max="900"/>
   <yAdd min="30" max="80"/>
   <noOfObjects>5</noOfObjects>
@@ -171,8 +171,8 @@
 </bullet>
 
 <ghostb>
-  <filePositive>images/b.bmp</filePositive>
-  <fileNegative>images/b.bmp</fileNegative>
+  <filePositive>images/bones.png</filePositive>
+  <fileNegative>images/bones.png</fileNegative>
   <comeback>false</comeback>
   <totalInstance>5</totalInstance>
   <startLoc x="50" y="470"/>
@@ -183,16 +183,16 @@
   <height>11</height>
   <speedX>90</speedX>
   <speedY>0</speedY>
-  <bulletSpeed>400</bulletSpeed>
+  <bulletSpeed>200</bulletSpeed>
   <maxBullet>3</maxBullet>
   <distance>350</distance>
   <transparency>true</transparency>
   <safeDistance>600</safeDistance>
-  <bulletInterval>300</bulletInterval>
+  <bulletInterval>600</bulletInterval>
   <chunk>
     <comeback>false</comeback>
-    <size>10</size>
-    <distance>100</distance>
+    <size>18</size>
+    <distance>50</distance>
   </chunk>
 </ghostb>
 

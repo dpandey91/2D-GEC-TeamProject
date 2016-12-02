@@ -53,6 +53,7 @@ private:
   Player* player;
   GhostManager ghostMgr;
   SDLSound sound;
+  bool showPoolHud;
   
   std::vector<ScaledSprite*> pumpkin;
 

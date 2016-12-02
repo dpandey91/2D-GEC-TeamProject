@@ -18,6 +18,8 @@ public:
   void manageEnemy();
   
   bool collidedWithBullets(const Drawable* d);
+  void makeDumb(){ isDumb = true;}
+  void makeSmart(){ isDumb = false;}
 
   //static void incrSafeDistance() {++safeDistance; }
   //static void decrSafeDistance() { --safeDistance; }
@@ -36,6 +38,8 @@ private:
   int safeDistance;
   int bulletInterval;
   int timeSinceLastBullet;
+  
+  bool isDumb;
   
   SmartSprite(const SmartSprite &);
   SmartSprite& operator=(const SmartSprite &rhs);

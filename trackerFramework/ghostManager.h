@@ -34,6 +34,7 @@ private:
   
   Player& player;
   int noOfExplosions;
+  bool startSmartSprite;
   Vector2f getScaledPosition(Vector2f position, float cushion);
   void updateGhost(Ghost* ghost);
 };

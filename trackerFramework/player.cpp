@@ -3,6 +3,7 @@
 #include "frameFactory.h"
 #include "health.h"
 #include "explodingSprite.h"
+#include "viewport.h"
 
 Player::Player( const std::string& name) :
   TwoWayMultiSprite(name),
@@ -18,7 +19,9 @@ Player::Player( const std::string& name) :
   bullets(bulletName),
   isExploding(false),
   explosion(NULL),
-  strategy()
+  strategy(),
+  godMode(false),
+  score(0)
 {}
 
 Player::Player(const Player& s) :
@@ -35,7 +38,9 @@ Player::Player(const Player& s) :
   bullets(s.bullets),
   isExploding(s.isExploding),
   explosion(NULL),
-  strategy(s.strategy)
+  strategy(s.strategy),
+  godMode(false),
+  score(0)
 {}
 
 Player::~Player(){
@@ -53,6 +58,8 @@ void Player::resetPosition(){
    bullets.reset();
    isExploding = false;
    explosion = NULL;
+   score = 0;
+   godMode = false;
    setState(WALK);
 } 
 
@@ -168,6 +175,17 @@ void Player::update(Uint32 ticks) {
       }
     }    
   }
+  
+  updateState();
+}
+
+void Player::updateState(){
+    if(Health::getInstance().getHealth() <= 0){
+        currState = LOSE;
+    }
+    if(X() + frames[currentFrame]->getWidth() >= Viewport::getInstance().X() + Viewport::getInstance().getWidth()){
+        currState = WON;
+    }
 }
 
 void Player::increaseVelocity(float scale){
@@ -199,17 +217,23 @@ void Player::shoot(){
 }
 
 void Player::explode(){
-    //std::cout << "Exploded" << std::endl;
-    if(!explosion){
-        explosion = new ExplodingSprite(Sprite(getName(), getPosition(), getVelocity(), frames[currentFrame]));
+    if(!godMode){
+        if(!explosion){
+            explosion = new ExplodingSprite(Sprite(getName(), getPosition(), getVelocity(), frames[currentFrame]));
+        }
+        Health::getInstance().update();
+        currState = EXPLODE;
+        bExploded = true;
     }
-    //isExploding = true;
-    currState = EXPLODE;
-    bExploded = true;
 }
 
 bool Player::collidedWithBullets(const Drawable* d) {
-  return bullets.collidedWith(d);
+  bool bCollided = false;
+  bCollided = bullets.collidedWith(d);
+  if(bCollided)
+      score++;
+  
+  return bCollided;
 }
 
 bool Player::collidedWith(const Drawable* d) {

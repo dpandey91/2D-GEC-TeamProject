@@ -55,7 +55,7 @@ void Frame::draw(Sint16 x, Sint16 y, double angle) const {
 }
 
 void Frame::zoomIn(Sint16 x, Sint16 y, double zoomFactor) const {
-  SDL_Surface* tmp = rotozoomSurface(surface, 0.0, zoomFactor, 1);
+  SDL_Surface* tmp = rotozoomSurface(surface, 0.0, zoomFactor, SMOOTHING_ON);
   Sint16 zero = 0;
   Uint16 width = tmp->w;
   Uint16 height = tmp->h;

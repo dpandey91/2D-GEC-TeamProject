@@ -9,7 +9,8 @@ GhostManager::GhostManager(Player& p):
   dumbGhosts(),
   smartGhosts(),
   player(p),
-  noOfExplosions(0)
+  noOfExplosions(0),
+  startSmartSprite(false)
 {}
 
 GhostManager::GhostManager(const GhostManager& g):
@@ -18,7 +19,8 @@ GhostManager::GhostManager(const GhostManager& g):
   dumbGhosts(g.dumbGhosts),
   smartGhosts(g.smartGhosts),
   player(g.player),
-  noOfExplosions(g.noOfExplosions)
+  noOfExplosions(g.noOfExplosions),
+  startSmartSprite(false)
 {}
 
 GhostManager::~GhostManager(){
@@ -45,14 +47,14 @@ void GhostManager::makeGhosts(){
   for(int i =0; i < noOfGhosts; i++){
   
     Vector2f position(Gamedata::getInstance().getRandFloat(Gamedata::getInstance().getXmlInt(name+"/startLoc/x"), Gamedata::getInstance().getXmlInt(name+      "/endLoc/x")), Gamedata::getInstance().getRandFloat(Gamedata::getInstance().getXmlInt(name+"/startLoc/y"), Gamedata::getInstance().getXmlInt(name+"/endLoc/y")));
-                     
-   // if(!ghostSprite){
+
+    if(!ghostSprite){
         ghostSprite = new Ghost(name, position, velocity);
-        dumbGhosts.push_back(ghostSprite);
-    //}
-    //else{
-    //    dumbGhosts.push_back(new Ghost(ghostSprite->getName(), position, velocity, ghostSprite->getFrames()));   
-    //}
+        dumbGhosts.push_back(ghostSprite);    
+    }
+    else{
+        dumbGhosts.push_back(new Ghost(ghostSprite->getName(), position, velocity, ghostSprite->getFrames()));
+    }
   }
 }
 
@@ -63,8 +65,7 @@ void GhostManager::draw() const{
     ptr++;
   }
   
-  if(noOfExplosions >= 5){
-      //std::cout << "draw smart ghost" << std::endl;
+  if(startSmartSprite){
       ptr = smartGhosts.begin();  
       while(ptr != smartGhosts.end()) {
         (*ptr)->draw();
@@ -81,7 +82,7 @@ void GhostManager::update(unsigned int ticks){
      ptr++;
   }
   
-  if(noOfExplosions >= 5){
+  if(startSmartSprite){
     ptr = smartGhosts.begin();
     while(ptr != smartGhosts.end()) {
      (*ptr)->update(ticks);
@@ -99,12 +100,22 @@ void GhostManager::updateGhost(Ghost* ghost){
      Vector2f objectVel = viewport.getObjectVelocity();
      
      if(ghost->X() < (x1 - 40) || ghost->X() > (x2 + 40)){
+        SmartSprite* smGhost = dynamic_cast<SmartSprite*>(ghost);
         if(objectVel[0] < 0){
             ghost->setPosition(getScaledPosition(Vector2f(x1-40, Gamedata::getInstance().getRandFloat(150, y2)), 40));
+            if(smGhost){
+                smGhost->makeSmart();
+                ghost->Y(player.Y());
+            }
         }
         else{
             ghost->setPosition(getScaledPosition(Vector2f(x2+40, Gamedata::getInstance().getRandFloat(150, y2)), 40));
+            if(smGhost ){
+                smGhost->makeSmart();
+                ghost->Y(player.Y());
+            }
         }
+        startSmartSprite = true;
      }
      if(objectVel[0] < 0){
          ghost->velocityX(abs(ghost->velocityX()));
@@ -134,18 +145,34 @@ bool GhostManager::checkForCollisions(Player* player1) {
         noOfExplosions++;
         bExplode = true;
         ++iter;
-    }
-    else ++iter;    
-  }
-  
-  iter = smartGhosts.begin();
-  while(iter != smartGhosts.end()){
-    if(static_cast<SmartSprite*>(*iter)->collidedWithBullets(player1)){
-        if(!player1->isObjExploded())
-            player1->explode();
         break;
     }
-    ++iter;
+    else ++iter;
+  }
+  
+  if(startSmartSprite){
+      iter = smartGhosts.begin();
+      while(iter != smartGhosts.end()){
+        if(static_cast<SmartSprite*>(*iter)->collidedWithBullets(player1)){
+            if(!player1->isObjExploded()){
+                static_cast<SmartSprite*>(*iter)->makeDumb();
+                player1->explode();
+            }
+            break;
+        }
+        else if (!bExplode && player1->collidedWithBullets(*iter)){
+            (*iter)->explode();
+            bExplode = true;
+            ++iter;
+            break;
+        }
+        
+        ++iter;
+      }    
+  }
+  
+  if(noOfExplosions >= 5){
+      startSmartSprite = true;
   }
   
   return bExplode;
@@ -161,10 +188,11 @@ void GhostManager::reset(){
 
 void GhostManager::makeSmartGhost(){
     std::list<Ghost*>::iterator iter = dumbGhosts.begin();
-    int i = 0; int size = dumbGhosts.size()/2;
+    int i = 0; int size = 3;
     while(i < size){
         SmartSprite* sm = new SmartSprite(*(*iter), player);
         smartGhosts.push_back(sm);
+        //dumbGhosts.erase(iter);
         ++iter;
         ++i;
         break;
@@ -175,6 +203,6 @@ void GhostManager::shoot(){
     std::list<Ghost*>::iterator iter = smartGhosts.begin();
     while(iter != smartGhosts.end()){
         static_cast<SmartSprite*>(*iter)->shoot();
-        break;
+        ++iter;
     }
 }

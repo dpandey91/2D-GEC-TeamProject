@@ -18,6 +18,7 @@ public:
   virtual void update(Uint32 ticks);
   void resetPosition();
   void setState(int state);
+  int getState(){ return currState; }
   
   void stop();
   void moveLeft();
@@ -36,15 +37,25 @@ public:
   
   unsigned int getBulletCount() const {return bullets.getBulletlistCount();}
   unsigned int getFreeCount() const {return bullets.getFreelistCount();}
-    
-private:
+  
+  void updateState();
+  
+  void toggleGodMode(){ godMode = !godMode; }
+  bool getGodMode() { return godMode;}
+  
+  int getScore() { return score;}
+  
   enum PLAYER_STATES{
       IDLE,
       WALK,
       EXPLODE,
-      VANISH
+      VANISH,
+      WON,
+      LOSE
   };
-  
+    
+private:
+    
   void move(const float& incr);
   int currState;
   bool keyPressed;
@@ -61,6 +72,8 @@ private:
   bool isExploding;
   ExplodingSprite* explosion;
   PerPixelCollisionStrategy strategy;
+  bool godMode;
+  int score;
   
   Player& operator=(const Player&);
 };
