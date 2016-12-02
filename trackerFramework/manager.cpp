@@ -234,10 +234,7 @@ void Manager::update() {
     player->stop();
   }
   player->update(ticks);
-  bool pExplode = ghostMgr.checkForCollisions(player);
-  if(pExplode){
-      //sound("Explosion", 2);
-  }
+  ghostMgr.checkForCollisions(player);
   ghostMgr.update(ticks);
   
   if(player->getState() == player->WON || player->getState() == player->LOSE){
@@ -340,7 +337,7 @@ void Manager::play() {
        
         if (keystate[SDLK_n] ) {
           player->shoot();
-          sound("Gun", 1);
+          sound("Gun", 0);
         }
         
         if (keystate[SDLK_F2] && !keyCatch) {

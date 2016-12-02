@@ -36,13 +36,10 @@ SDLSound::SDLSound() :
   music = Mix_LoadMUS("sound/background_music.mp3");
   // Need to install midi to play the following:
   // music = Mix_LoadMUS("sound/ballad2.mid");
-  if (!music) throw string("Couldn't load 100Years.mp3")+Mix_GetError();
+  if (!music) throw string("Couldn't load background_music.mp3")+Mix_GetError();
 
   startMusic();
-  sounds["Boom"] = Mix_LoadWAV("sound/Boom.wav");
   sounds["Gun"] = Mix_LoadWAV("sound/Gun.wav");
-  sounds["Explosion"] = Mix_LoadWAV("sound/explosion.wav");
-  sounds["Phaser"] = Mix_LoadWAV("sound/phaser.wav");
   for (unsigned int i = 0; i < sounds.size(); ++i) channels.push_back(i);
 }
 
@@ -54,14 +51,6 @@ void SDLSound::toggleMusic() {
     Mix_PauseMusic(); 
   } 
 }
-
-/*void SDLSound::operator[](int index) {
-  if (currentSound >= 0) Mix_HaltChannel(currentSound);
-  currentSound = index;
-  Mix_VolumeChunk(sounds[index], volume);
-  channels[index] = 
-     Mix_PlayChannel(channels[index], sounds[index], 0);
-}*/
 
 void SDLSound::operator()(std::string key, int index) {
   if (currentSound >= 0) Mix_HaltChannel(currentSound);
