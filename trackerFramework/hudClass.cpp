@@ -68,7 +68,7 @@ void HudClass::drawWin(SDL_Surface* const& screen, const IOManager& io, int scor
     const Uint32 color = SDL_MapRGB(screen->format, rgbVal.red, rgbVal.blue, rgbVal.green);
     Draw_AALine(screen, x, y+HUD_H/2, x+HUD_W, y+HUD_H/2, HUD_H, 0, 0, 0, 0xff/2);
     io.printMessageAt("You Won!", x+5, y+5);
-    io.printMessageValueAt("Your score is !", score, x+5, y+30);
+    io.printMessageValueAt("Your score is ", score, x+5, y+30);
     io.printMessageAt("You reached home successfully!", x+5, y+60);
     Draw_AALine(screen, x,y,x+HUD_W,y, color);
     Draw_AALine(screen, x,y+HUD_H,x+HUD_W,y+HUD_H, color);
