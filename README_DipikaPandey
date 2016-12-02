@@ -1,0 +1,56 @@
+Name: Dipika Pandey
+Clemson Email Address: dpandey@g.clemson.edu
+Course number: (4160 or 6160)
+
+Project no:6
+Project due date:12/02/2016
+Project Name: Escape the graveyard
+
+Goal of the game :As  described in the earlier milestone of the project,the game is based on the idea that a school boy lost his way to home and trying to find his home through the graveyard and encountered some ghosts. He has the magical pencil box(object pool) from which he takes out the pencils, rubber, ruler and other stuff to kill the ghosts(Collision Detection and Explosion).He has to kill all ghosts to reach his home and win the game.
+
+Contribution to the game:
+
+1) Incorporated AI.Our ghosts throw bones at player as part of AI and player has to save him self to survive in the game .
+2) implemented God mode. In this project, the player won’t die if god mode is enable even if it gets attacked by ghosts.
+3)Implemented collision detection and thus exploding the sprite:
+When projectiles such as pencil, ruler, eraser or pencil box collides with the ghost, a midpoint collision detection technique is used and the ghosts are exploded. 
+The exploded ghosts are reused for again exploding i.e. the exploding sprite once created is not deleted after explosion but in destructor of sprite. This adds to the efficiency as multiple creation of exploding sprite is avoided. The ghosts enter the viewport after explodision.
+
+4)A collision is detected between ghosts and player using per pixel collision detecting technique. On collision the health of player is reduced and will reach to zero on colliding with ghosts. For boosting the energy of player, you can use booster key - k.
+5)Implemented reset functionality that restarts game using R key.
+
+6)For creating Painter’s Algorithm effect: To design parallax scrolling at more depth, we have added flying pumpkin which will be flying across the sky and graveyard. Pumpkin closer to pathway will be flying at faster rate than the pumpkin who are far away.
+
+7)Added soundtrack for shooting the ghosts and background music.
+8)implemented scores based on the number of ghosts killed.
+9)A Demonstrated Object Pool. Provide a HUD option, using F2, that illustrates your Object Pool.
+10) Implemented projectiles:A projectiles/shooting is implemented for player object using key n. A shooting object such as pencil, ruler, eraser or pencil is triggered from player on detecting keypress. These projectiles collide with ghost and result into explosion.
+
+11) Implemented generation of frames using F4 key.
+
+12) Implemented different Hud Class that shows game information, winning information, losing information.
+
+
+Important points to note:
+
+We create only a specified number for ghosts specified by xml which is set to 4 for this project. We reuse the same ghost object to reappear again when they go  out of viewport or are exploded. They are again move into the viewport from the direction in which player is moving and will move in opposite direction of player approaching player. Frames of each ghosts created are shallow copy rather than deep copy(for better performance).
+
+2) We have created our own ghost and the roadway sprite.
+
+3) Our project is completely datadriven and can be easily configured using the XML file.
+
+4) The painter's algorithm i.e. pumpkins in background and parallax scrolling create illusion of depth
+ 
+
+
+
+Extra Contribution:
+
+
+Problems with this project:None.
+
+References:
+1)http://www.clker.com/clipart-cartoon-bone-1.html
+The other Sprites have the references attached in the previous milestones.
+
+
