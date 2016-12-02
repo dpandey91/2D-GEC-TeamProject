@@ -16,7 +16,7 @@ BulletsPool::BulletsPool(const BulletsPool& b) :
 {}
 
 void BulletsPool::shoot(const Vector2f& pos, const Vector2f& vel){
-  if(freeList.empty() && bulletList.size() < 4) {
+  if(freeList.empty() && (bulletList.size() + freeList.size()) < maxBullet) {
     MultiBullet b(name, pos, vel);
     bulletList.push_back(b);
   }

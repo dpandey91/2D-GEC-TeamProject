@@ -2,17 +2,17 @@
 #define Ghost__H
 #include <string>
 #include <vector>
-#include "sprite.h"
+#include "multisprite.h"
 
 class ExplodingSprite;
-class Ghost : public Sprite {
+class Ghost : public MultiSprite {
 public:
 
   Ghost(const std::string&);
   Ghost(const std::string& name, const Vector2f& pos, const Vector2f& vel);
-  Ghost(const std::string& name, const Vector2f& pos, const Vector2f& vel, const Frame* frm);
+  Ghost(const std::string& name, const Vector2f& pos, const Vector2f& vel, const std::vector<Frame *>& fms);
   Ghost(const Ghost&);
-  Ghost& operator=(const Ghost& rhs);
+  //Ghost& operator=(const Ghost& rhs);
   
   virtual ~Ghost();
 
@@ -44,6 +44,7 @@ private:
   int minyAdd;
   int maxyAdd;
   ExplodingSprite* explosion;
+  Ghost& operator=(const Ghost& rhs);
 };
 
 #endif

@@ -27,10 +27,17 @@ void MultiBullet::reset(){
 
 void MultiBullet::update(Uint32 ticks, const Vector2f& pPos) {
   
-  Vector2f position = getPosition();
-  if(Y()+frameHeight < 0 || Y() > worldHeight || X() < 0 || X() > worldWidth || position[0] > pPos[0] + maxDistance)
-    tooFar = true;
-
+  if(Y()+frameHeight < 0 || Y() > worldHeight || X() < 0 || X() > worldWidth)
+      tooFar = true;
+  
+  if(X() > pPos[0]+ getFrame()->getWidth() + maxDistance){
+      tooFar = true;
+  }
+  
+  if(X() < pPos[0] - maxDistance){
+      tooFar = true;
+  }
+  
   MultiSprite::update(ticks);
 }
 

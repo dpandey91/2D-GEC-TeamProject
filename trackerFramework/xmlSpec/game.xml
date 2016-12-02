@@ -80,7 +80,7 @@
   <startLoc x="54" y="200"/>
   <xframes>1</xframes>
   <yframes>9</yframes>
-  <yBound>120</yBound>
+  <yBound>150</yBound>
   <frameInterval>50</frameInterval>
   <speedX>350</speedX>
   <speedY>250</speedY>
@@ -129,10 +129,12 @@
   <file>images/ghost.png</file>
   <startLoc x="404" y="150"/>
   <endLoc x="1000" y="400"/>
-  <frameInterval>20</frameInterval>
-  <speed x="-130" y="-10"/>
+  <frameInterval>100</frameInterval>
+  <speed x="-60" y="-10"/>
   <comeback>true</comeback>
-  <yBound>70</yBound>
+  <xframes>1</xframes>
+  <yframes>3</yframes>
+  <yBound>180</yBound>
   <xAdd min="600" max="900"/>
   <yAdd min="30" max="80"/>
   <noOfObjects>5</noOfObjects>
@@ -167,6 +169,32 @@
     <distance>100</distance>
   </chunk>
 </bullet>
+
+<ghostb>
+  <filePositive>images/b.bmp</filePositive>
+  <fileNegative>images/b.bmp</fileNegative>
+  <comeback>false</comeback>
+  <totalInstance>5</totalInstance>
+  <startLoc x="50" y="470"/>
+  <xframes>1</xframes>
+  <yframes>1</yframes>
+  <frameInterval>20</frameInterval>
+  <width>44</width>
+  <height>11</height>
+  <speedX>90</speedX>
+  <speedY>0</speedY>
+  <bulletSpeed>400</bulletSpeed>
+  <maxBullet>3</maxBullet>
+  <distance>350</distance>
+  <transparency>true</transparency>
+  <safeDistance>600</safeDistance>
+  <bulletInterval>300</bulletInterval>
+  <chunk>
+    <comeback>false</comeback>
+    <size>10</size>
+    <distance>100</distance>
+  </chunk>
+</ghostb>
 
 <font name="font">
   <file>font/dyslexic-bold.otf</file>

@@ -11,7 +11,9 @@ public:
   MultiSprite(const std::string& name, const Vector2f& pos, const Vector2f& vel, const std::vector<Frame*>& fms, const int nFrameMul);
   MultiSprite(const std::string&, const std::vector<Frame *>& fms, const int nFrameMul = 1);
   MultiSprite(const MultiSprite&);
-  virtual ~MultiSprite(){}; 
+  virtual ~MultiSprite(){};
+  
+  //MultiSprite& operator=(const MultiSprite& m);
 
   virtual void draw() const;
   virtual void update(Uint32 ticks);

@@ -6,7 +6,7 @@
 #include "vector2f.h"
 
 Ghost::Ghost( const std::string& name) :
-  Sprite(name),
+  MultiSprite(name),
   currState(WALK),
   yBound(Gamedata::getInstance().getXmlInt("ghost/yBound")),
   minxAdd(Gamedata::getInstance().getXmlInt("ghost/xAdd/min")),
@@ -17,8 +17,8 @@ Ghost::Ghost( const std::string& name) :
 {}
 
 Ghost::Ghost(const std::string& name, const Vector2f& pos, const Vector2f& vel):
-  Sprite(name, pos, vel,
-         FrameFactory::getInstance().getFrame(name)),
+  MultiSprite(name, pos, vel,
+         FrameFactory::getInstance().getFrames(name), 1),
   currState(WALK),
   yBound(Gamedata::getInstance().getXmlInt("ghost/yBound")),
   minxAdd(Gamedata::getInstance().getXmlInt("ghost/xAdd/min")),
@@ -28,8 +28,8 @@ Ghost::Ghost(const std::string& name, const Vector2f& pos, const Vector2f& vel):
   explosion(NULL)
 {}
 
-Ghost::Ghost(const std::string& name, const Vector2f& pos, const Vector2f& vel, const Frame* frm):
-  Sprite(name, pos, vel, frm),
+Ghost::Ghost(const std::string& name, const Vector2f& pos, const Vector2f& vel, const std::vector<Frame *>& fms):
+  MultiSprite(name, pos, vel, fms, 1),
   currState(WALK),
   yBound(Gamedata::getInstance().getXmlInt("ghost/yBound")),
   minxAdd(Gamedata::getInstance().getXmlInt("ghost/xAdd/min")),
@@ -40,7 +40,7 @@ Ghost::Ghost(const std::string& name, const Vector2f& pos, const Vector2f& vel, 
 { }
 
 Ghost::Ghost(const Ghost& s) :
-  Sprite(s),
+  MultiSprite(s),
   currState(s.currState),
   yBound(s.yBound),
   minxAdd(s.minxAdd),
@@ -49,21 +49,6 @@ Ghost::Ghost(const Ghost& s) :
   maxyAdd(s.maxyAdd),
   explosion(NULL)
 {}
-
-Ghost& Ghost::operator=(const Ghost& rhs){
-    if(this != &rhs){
-      Sprite::operator=(rhs);
-      currState = rhs.currState;
-      yBound = rhs.yBound;
-      minxAdd = rhs.minxAdd;
-      maxxAdd = rhs.maxxAdd;
-      minyAdd = rhs.minyAdd;
-      maxyAdd = rhs.maxyAdd;
-      explosion = rhs.explosion;
-    }
-    
-    return *this;
-}
 
 Ghost::~Ghost() {
   if(explosion){
@@ -106,7 +91,7 @@ void Ghost::draw() const {
     explosion->draw();
   }
   else if(currState != VANISH){
-    Sprite::draw();  
+    MultiSprite::draw();  
   }
 }
 
@@ -119,18 +104,23 @@ void Ghost::update(Uint32 ticks) {
       }
       return;
   }
-  Sprite::update(ticks);
+  MultiSprite::update(ticks);
   
   if(bComeback){
-    if ( Y() > yBound) {
+    if ( Y() < yBound) {
+        velocityY( abs( velocityY() ) );
+    }
+    
+    if ( Y() > worldHeight-frameHeight) {
         velocityY( -abs( velocityY() ) );
+        Y(worldHeight - frameHeight);
     }
   }
 }
 
 void Ghost::explode(){
     if(!explosion){
-        explosion = new ExplodingSprite(*this);
+        explosion = new ExplodingSprite(Sprite(getName(), getPosition(), getVelocity(), frames[currentFrame]));
     }
     explosion->resetChunks(getPosition());
     currState = EXPLODE;

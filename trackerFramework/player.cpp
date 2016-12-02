@@ -114,7 +114,7 @@ void Player::move(const float& incr){
     }
     
     if(keyPressedw){
-        if( Y() > yBound){
+       if( Y() > yBound){
             Y(Y() + velocityY()*incr);     
             velocityY( -abs( velocityY() ) ); 
         }
@@ -125,11 +125,12 @@ void Player::move(const float& incr){
              Y(Y() + velocityY()*incr);
              velocityY( abs( velocityY() ) );
         }
-    }        
+    }
 }
 
 void Player::draw() const{
-  if(currState == EXPLODE && explosion && explosion->chunkCount() != 0){
+    //currState == EXPLODE && 
+  if(explosion && explosion->chunkCount() != 0){
     explosion->draw();
   }
   else if(currState != VANISH){
@@ -198,9 +199,11 @@ void Player::shoot(){
 }
 
 void Player::explode(){
+    //std::cout << "Exploded" << std::endl;
     if(!explosion){
         explosion = new ExplodingSprite(Sprite(getName(), getPosition(), getVelocity(), frames[currentFrame]));
     }
+    //isExploding = true;
     currState = EXPLODE;
     bExploded = true;
 }
@@ -215,7 +218,7 @@ bool Player::collidedWith(const Drawable* d) {
   if(bRet){
     if(!isExploding){
       Health::getInstance().update();
-      isExploding = true;    
+      isExploding = true;
     }
   }
   else{

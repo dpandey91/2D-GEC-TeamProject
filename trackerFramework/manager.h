@@ -22,7 +22,6 @@ public:
 private:
   const bool env;
   const IOManager& io;
-  GhostManager ghostMgr;
   Clock clock;
 
   SDL_Surface * const screen;
@@ -52,6 +51,7 @@ private:
   unsigned int moveTick;
   
   Player* player;
+  GhostManager ghostMgr;
   SDLSound sound;
   
   std::vector<ScaledSprite*> pumpkin;

@@ -42,7 +42,6 @@ Manager::~Manager() {
 Manager::Manager() :
   env( SDL_putenv(const_cast<char*>("SDL_VIDEO_CENTERED=center")) ),
   io( IOManager::getInstance() ),
-  ghostMgr(),
   clock( Clock::getInstance() ),
   screen( io.getScreen() ),
   world("layer1", Gamedata::getInstance().getXmlInt("layer1/factor") ),
@@ -67,6 +66,7 @@ Manager::Manager() :
   playerMoveCount(Gamedata::getInstance().getXmlInt("healthBar/moveCount")),
   moveTick(0),
   player(new Player("boy")),
+  ghostMgr(*player),
   sound(),
   pumpkin()
 {
@@ -78,6 +78,7 @@ Manager::Manager() :
   
   makePumpkins();
   ghostMgr.makeGhosts();
+  ghostMgr.makeSmartGhost();
   viewport.setObjectToTrack(player);
 }
 
@@ -227,7 +228,7 @@ void Manager::update() {
   player->update(ticks);
   bool pExplode = ghostMgr.checkForCollisions(player);
   if(pExplode){
-      sound("Explosion", 2);
+      //sound("Explosion", 2);
   }
   ghostMgr.update(ticks);
   
@@ -328,6 +329,10 @@ void Manager::play() {
         if (keystate[SDLK_n] ) {
           player->shoot();
           sound("Gun", 1);
+        }
+        
+        if (keystate[SDLK_m] ) {
+          ghostMgr.shoot();
         }
       }
     }
