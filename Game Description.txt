@@ -1,0 +1,15 @@
+Game Description:
+
+As Halloween festival is approaching, we are planning to make Halloween theme based game in which one boy lost his way while going home and he has encountered some ghosts. Furthermore, he also gets terrified with flying Halloween Pumpkin (satisfies the painter’s algorithm-depth effect). To get scores and win the game,the player has to save himself from the ghosts and kill them for getting points. If some ghosts (defined by xml) are killed by the player, a next level of the game will begin in which ghosts will have power to shoot and the player has to save himself of being attacked and shoot the ghosts. The player will get scores as per the number of ghosts killed. The game will end if the boy successfully reaches his home after surpassing or killing all the ghosts.
+
+1)http://www.clipartkid.com/graveyard-cliparts/ ………….For Graveyard
+2)https://www.behance.net/gallery/32271557/Button-Boy- …. for the boy object
+3)http://www.clipartqueen.com/halloween-clip-art.html…. For Halloween Pumpkin
+4)http://www.clipartkid.com/full-moon-transparent-cliparts/…. for Moon image
+5)http://instantsprite.com/… for making spritesheet
+6)http://ezgif.com/ …for frame extraction from Gif
+7) The projectiles sprites are used from:
+  http://hostted.com/pencil-clip/
+  http://www.clipartkid.com/pencil-no-background-cliparts/
+  http://www.clipartpanda.com/categories/inch-ruler-clipart
+  http://www.clker.com/clipart-cartoon-bone-1.html
