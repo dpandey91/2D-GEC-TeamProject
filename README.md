@@ -5,7 +5,7 @@ This is a game project developed using SDL engine under guidance of Dr. Malloy, 
 Project name: Escape the Graveyard.
 
 This project encorporates design patterns: Singleton(Myer's), Factory, Object Pooling, Observer, Strategy, Visitor, Flyweight. 
-It has efficient implementation for all the sprites object in terms of deep v/s shallow copy. It implements C++ concepts in a effective with some inputs from Scott Myer's, Effective C++.
+It has efficient implementation for all the sprites object in terms of deep v/s shallow copy. It implements C++ concepts in a effective with some inputs from Scott Meyers, Effective C++.
 
 Setup:
 This project was mainly built for Linux platform, Ubunutu. But it should work on any platform with all the required libraries present.
